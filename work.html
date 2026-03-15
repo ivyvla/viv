@@ -1,22 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ivy's Grillz - Custom Smiles</title>
-    
+
     <!-- Note: 'Shrikhand' is used to replicate the commercial 'Marvin Visions' font seen on the Sasquatch Sunset poster -->
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Shrikhand&family=Inter:ital,wght@0,400;0,600;0,800;1,400;1,600&family=Yellowtail&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Shrikhand&family=Inter:ital,wght@0,400;0,600;0,800;1,400;1,600&family=Yellowtail&display=swap"
+        rel="stylesheet">
+
     <style>
         :root {
-            --cream: #e6e3ce;
+            --cream: #DAD7CD;
             --dark-bg: #222426;
-            --accent: #dfff00; /* Adjusted highlighter green */
-            --nav-height: 80px;
+            --accent: #588157;
+            --accent-light: #A3B18A;
+            --nav-height: 5vw;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
         body {
             background-color: var(--dark-bg);
@@ -26,160 +34,512 @@
         }
 
         /* --- SUBPAGE TYPOGRAPHY SETTINGS --- */
-        .page-content { padding-top: calc(var(--nav-height) + 5vw); width: 100vw; display: flex; flex-direction: column; align-items: center; }
-        .page-title { font-family: 'Shrikhand', cursive; font-size: 8vw; color: var(--accent); margin-bottom: 3vw; text-shadow: 2px 2px 0px #000; text-align: center; line-height: 1; text-transform: uppercase; }
+        .page-content {
+            padding-top: calc(var(--nav-height) + 5vw);
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page-title {
+            font-family: 'Shrikhand', cursive;
+            font-size: 8vw;
+            color: var(--accent);
+            margin-bottom: 3vw;
+            text-shadow: 2px 2px 0px #000;
+            text-align: center;
+            line-height: 1;
+            text-transform: uppercase;
+        }
 
         .top-bar-container {
-            position: fixed; top: 0; left: 0; width: 100vw; height: var(--nav-height); 
-            display: flex; justify-content: center; align-items: center; z-index: 9999; pointer-events: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: var(--nav-height);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            pointer-events: none;
         }
+
         .top-bar {
-            width: 98vw; height: calc(100% - 2vw);
+            width: 98vw;
+            height: calc(100% - 1vw);
             background-color: var(--dark-bg);
             border: 2px solid var(--cream);
-            border-radius: 8px;
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 0 4vw; pointer-events: auto;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2vw;
+            pointer-events: auto;
         }
+
         .logo {
-            font-family: 'Yellowtail', cursive; font-size: 42px; color: var(--accent);
-            cursor: pointer; user-select: none; line-height: 1; text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            font-family: 'Yellowtail', cursive;
+            font-size: 42px;
+            color: var(--accent);
+            cursor: pointer;
+            user-select: none;
+            line-height: 1;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         }
-        .nav-links { display: flex; gap: 3vw; font-family: 'Archivo Black', sans-serif; font-size: 16px; text-transform: uppercase; letter-spacing: 1px; }
-        .nav-links a { color: var(--cream); text-decoration: none; transition: color 0.2s; }
-        .nav-links a:hover { color: var(--accent); }
+
+        .nav-links {
+            display: flex;
+            gap: 2vw;
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-left: auto;
+        }
+
+        .nav-links a {
+            color: var(--cream);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
 
         /* --- WORK PAGE SPECIFICS --- */
-        .work-grid { 
-            display: grid; 
-            grid-template-columns: repeat(2, 1fr); 
-            gap: 2vw; 
-            width: 90vw; 
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2vw;
+            width: 90vw;
             margin-bottom: 10vw;
         }
-        
-        .work-card { 
-            position: relative; 
-            width: 100%; 
-            display: flex; 
-            flex-direction: column; 
+
+        .work-card {
+            background-color: var(--cream);
+            padding: 1vw;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
             cursor: pointer;
             overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-        
-        /* Stagger the right column downward to create masonry effect */
-        .work-card:nth-child(even) { margin-top: 5vw; }
+
+        /* Stagger layout: Every 4th child (starting at 3) spans the middle to push the next item */
+        /*
+          Layout Pattern (3 cols):
+          Row 1: [Card 1] [Card 2] [Empty]
+          Row 2: [Empty] [Card 3] [Card 4]
+          Row 3: [Card 5] [Card 6] [Empty]
+        */
+
+        .work-card:nth-child(4n - 1) {
+            grid-column-start: 2;
+            /* Forces Card 3 inward so it's Card3 + Card4 on the right */
+        }
+
+        .work-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
 
         .work-img-container {
             width: 100%;
-            height: 40vw; /* Tall portrait style */
-            border-radius: 8px;
+            aspect-ratio: 16 / 10;
             overflow: hidden;
             border: 2px solid var(--dark-bg);
-            transition: border-color 0.3s ease;
+            border-radius: 2px;
+            margin-bottom: 2vw;
         }
 
-        .work-img { 
-            width: 100%; 
-            height: 100%; 
-            background-color: #ccc; 
-            background-size: cover; 
-            background-position: center; 
+        .work-img {
+            width: 100%;
+            height: 100%;
+            background-color: #ccc;
+            background-size: cover;
+            background-position: center;
             transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        .work-card:hover .work-img { transform: scale(1.05); }
-        .work-card:hover .work-img-container { border-color: var(--accent); }
-
-        .work-meta {
-            padding: 1.5vw 0;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
+        .work-card:hover .work-img {
+            transform: scale(1.05);
         }
 
-        .work-client { font-size: 1.2vw; font-weight: 800; text-transform: uppercase; font-family: 'Inter', sans-serif; letter-spacing: 1px; color: #ccc; margin-bottom: 0.5vw; transition: color 0.3s ease;}
-        .work-title { font-family: 'Shrikhand', cursive; font-size: 2.5vw; color: var(--cream); line-height: 1; margin: 0; text-shadow: 1px 1px 0px #000; transition: color 0.3s ease;}
-        
-        .work-card:hover .work-client { color: var(--cream); }
-        .work-card:hover .work-title { color: var(--accent); }
+        .work-meta {
+            padding-bottom: 1vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* Centered Text */
+        }
 
-        .footer-block { width: 100vw; border-top: 2px solid var(--cream); }
+        .work-client {
+            font-size: 1vw;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 1px;
+            color: var(--dark-bg);
+            margin-bottom: 0.5vw;
+        }
+
+        .work-title {
+            font-family: 'Shrikhand', cursive;
+            font-size: 3vw;
+            color: var(--accent);
+            line-height: 1;
+            margin: 0;
+            text-shadow: none;
+            /* Removed Drop Shadow */
+            text-transform: uppercase;
+        }
+
+        .footer-block {
+            width: 100vw;
+            border-top: 2px solid var(--cream);
+        }
+
+        /* --- EXPANDING VIEW ALL CARD --- */
+        .view-all-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding-bottom: 20vw;
+            /* Added extra padding so the user can scroll far enough to see the animation finish */
+        }
+
+        .view-all-card {
+            width: 80vw;
+            /* Initial width, animates to 95vw */
+            height: 30vw;
+            border: 2px solid var(--cream);
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .view-all-card:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            /* Slight highlight on hover */
+        }
+
+        .view-all-text {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 4vw;
+            color: var(--cream);
+            text-transform: uppercase;
+            position: absolute;
+            left: 20%;
+            /* Animates to the left */
+        }
+
+        .view-all-arrow {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 5vw;
+            color: var(--cream);
+            position: absolute;
+            right: 20%;
+            /* Animates to the right */
+            text-shadow: 2px 2px 0 var(--dark-bg), -2px -2px 0 var(--cream);
+            /* Creates a 3D block text look like the reference */
+            /* Add SVG or text arrow */
+        }
 
         /* --- ADMIN OVERLAYS --- */
-        #_adm_m { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.95); z-index: 10000; justify-content: center; align-items: center; flex-direction: column; }
-        #_adm_m input { padding: 15px; font-size: 18px; border: none; outline: none; border-radius: 5px; margin-bottom: 20px; font-family: monospace; text-align: center; width: 300px; }
-        #_adm_m button { padding: 15px 30px; background: var(--accent); color: var(--dark-bg); border: none; font-family: 'Shrikhand', cursive; font-size: 24px; cursor: pointer; border-radius: 5px; transition: transform 0.2s; }
-        #_adm_m button:hover { transform: scale(1.05); }
+        #_adm_m {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
 
-        #_adm_toolbar { display: none; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: var(--accent); color: var(--dark-bg); padding: 15px 30px; border-radius: 50px; z-index: 10000; font-family: 'Shrikhand', cursive; font-size: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); align-items: center; gap: 20px; border: 2px solid var(--cream); }
-        #_adm_exit { background: var(--dark-bg); color: var(--accent); border: none; padding: 5px 15px; border-radius: 20px; font-family: 'Inter'; font-weight: 800; font-size: 12px; cursor: pointer; transition: background 0.2s; }
-        #_adm_exit:hover { background: white; color: var(--dark-bg); }
+        #_adm_m input {
+            padding: 15px;
+            font-size: 18px;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-family: monospace;
+            text-align: center;
+            width: 300px;
+        }
+
+        #_adm_m button {
+            padding: 15px 30px;
+            background: var(--accent);
+            color: var(--dark-bg);
+            border: none;
+            font-family: 'Shrikhand', cursive;
+            font-size: 24px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: transform 0.2s;
+        }
+
+        #_adm_m button:hover {
+            transform: scale(1.05);
+        }
+
+        #_adm_toolbar {
+            display: none;
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: var(--dark-bg);
+            padding: 15px 30px;
+            border-radius: 50px;
+            z-index: 10000;
+            font-family: 'Shrikhand', cursive;
+            font-size: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            align-items: center;
+            gap: 20px;
+            border: 2px solid var(--cream);
+        }
+
+        #_adm_exit {
+            background: var(--dark-bg);
+            color: var(--accent);
+            border: none;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-family: 'Inter';
+            font-weight: 800;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        #_adm_exit:hover {
+            background: white;
+            color: var(--dark-bg);
+        }
 
         /* Admin Visual Clues when logged in */
-        body.admin-active [data-edit="text"]:hover { outline: 2px dashed rgba(255, 255, 255, 0.5); background: rgba(0,0,0,0.1); cursor: text; }
-        body.admin-active [data-edit="bg"]:hover { outline: 4px dashed var(--accent); cursor: pointer; filter: brightness(0.8); transition: filter 0.2s;}
-        [contenteditable]:empty:before { content: "Type here..."; color: gray; }
+        body.admin-active [data-edit="text"]:hover {
+            outline: 2px dashed rgba(255, 255, 255, 0.5);
+            background: rgba(0, 0, 0, 0.1);
+            cursor: text;
+        }
+
+        body.admin-active [data-edit="bg"]:hover {
+            outline: 4px dashed var(--accent);
+            cursor: pointer;
+            filter: brightness(0.8);
+            transition: filter 0.2s;
+        }
+
+        [contenteditable]:empty:before {
+            content: "Type here...";
+            color: gray;
+        }
 
         /* --- GLOBAL BACKGROUND MARQUEE --- */
         .bg-marquee {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -1; display: flex; flex-direction: column; justify-content: space-around;
-            overflow: hidden; pointer-events: none; opacity: 0.05;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            overflow: hidden;
+            pointer-events: none;
+            opacity: 0.05;
         }
+
         .bg-marquee-text {
-            font-family: 'Archivo Black', sans-serif; font-size: 6vw; line-height: 1;
-            white-space: nowrap; color: transparent; -webkit-text-stroke: 2px var(--cream);
-            animation: bounce-scroll 20s ease-in-out infinite alternate; margin: -1vh 0;
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 6vw;
+            line-height: 1;
+            white-space: nowrap;
+            color: transparent;
+            -webkit-text-stroke: 2px var(--cream);
+            animation: bounce-scroll 20s ease-in-out infinite alternate;
+            margin: -1vh 0;
         }
-        .bg-marquee-text:nth-child(even) { animation-direction: alternate-reverse; }
-        @keyframes bounce-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-30%); } }
+
+        .bg-marquee-text:nth-child(even) {
+            animation-direction: alternate-reverse;
+        }
+
+        @keyframes bounce-scroll {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-30%);
+            }
+        }
 
         @media (max-width: 768px) {
-            .nav-links { display: none; } /* Hide text links to save space */
-            .logo { font-size: 28px; }
-            .top-bar { height: 60px; padding: 0 4vw; width: 92vw; top: 3vw; left: 4vw; }
-            .top-bar-container { height: 60px; }
-            
-            .page-title { font-size: 14vw; }
-            .work-grid { grid-template-columns: 1fr; width: 90vw; gap: 5vw; }
-            .work-card:nth-child(even) { margin-top: 0; }
-            .work-img-container { height: 100vw; }
-            .work-client { font-size: 3vw; }
-            .work-title { font-size: 6vw; }
-            
-            .footer-grid { grid-template-columns: 1fr; grid-template-rows: auto auto auto; }
-            .f-top-left h1 { font-size: 14vw; }
-            .f-top-right img { width: 40vw; height: 40vw; }
-            .f-mid-left { flex-direction: column; gap: 5vw; text-align: center; }
-            .f-mid-left-col h2 { font-size: 6vw; }
-            .f-mid-left-col p { font-size: 3vw; }
-            .social-box { width: 10vw; height: 10vw; font-size: 4vw; }
-            .f-bot-left { padding-top: 5vw;}
-            .staff-row { font-size: 2.5vw; flex-direction: column; gap: 1vw; text-align: center; padding: 4vw; }
-            .f-top-left, .f-top-right, .f-mid-left, .f-bot-left { border-right: none; }
+            .nav-links {
+                display: none;
+            }
+
+            /* Hide text links to save space */
+            .logo {
+                font-size: 28px;
+            }
+
+            .top-bar {
+                height: 60px;
+                padding: 0 4vw;
+                width: 92vw;
+                top: 3vw;
+                left: 4vw;
+            }
+
+            .top-bar-container {
+                height: 60px;
+            }
+
+            .page-title {
+                font-size: 14vw;
+            }
+
+            .work-grid {
+                grid-template-columns: 1fr;
+                width: 90vw;
+                gap: 5vw;
+            }
+
+            .work-card:nth-child(4n - 1) {
+                grid-column-start: auto;
+            }
+
+            .work-img-container {
+                aspect-ratio: 16 / 10;
+                height: auto;
+            }
+
+            .work-client {
+                font-size: 3vw;
+            }
+
+            .view-all-card {
+                height: 50vw;
+            }
+
+            .view-all-text {
+                font-size: 6vw;
+            }
+
+            .view-all-arrow {
+                font-size: 8vw;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto;
+            }
+
+            .f-top-left h1 {
+                font-size: 14vw;
+            }
+
+            .f-top-right img {
+                width: 40vw;
+                height: 40vw;
+            }
+
+            .f-mid-left {
+                flex-direction: column;
+                gap: 5vw;
+                text-align: center;
+            }
+
+            .f-mid-left-col h2 {
+                font-size: 6vw;
+            }
+
+            .f-mid-left-col p {
+                font-size: 3vw;
+            }
+
+            .social-box {
+                width: 10vw;
+                height: 10vw;
+                font-size: 4vw;
+            }
+
+            .f-bot-left {
+                padding-top: 5vw;
+            }
+
+            .staff-row {
+                font-size: 2.5vw;
+                flex-direction: column;
+                gap: 1vw;
+                text-align: center;
+                padding: 4vw;
+            }
+
+            .f-top-left,
+            .f-top-right,
+            .f-mid-left,
+            .f-bot-left {
+                border-right: none;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <!-- GLOBAL BACKGROUND MARQUEE -->
     <div class="bg-marquee">
         <!-- We will create more smaller rows -->
-        <div class="bg-marquee-text">GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - </div>
-        <div class="bg-marquee-text">GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - </div>
-        <div class="bg-marquee-text">GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - </div>
-        <div class="bg-marquee-text">GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - </div>
-        <div class="bg-marquee-text">GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - </div>
-        <div class="bg-marquee-text">GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - </div>
-        <div class="bg-marquee-text">GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - </div>
-        <div class="bg-marquee-text">GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - </div>
-        <div class="bg-marquee-text">GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - </div>
-        <div class="bg-marquee-text">GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - </div>
-        <div class="bg-marquee-text">GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - </div>
-        <div class="bg-marquee-text">GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - </div>
-        <div class="bg-marquee-text">GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - </div>
-        <div class="bg-marquee-text">GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - </div>
+        <div class="bg-marquee-text">GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ -
+            CUSTOM - GRILLZ - CUSTOM - </div>
+        <div class="bg-marquee-text">GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ -
+            CUSTOM - GRILLZ - CUSTOM - </div>
+        <div class="bg-marquee-text">GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ -
+            CUSTOM - GRILLZ - CUSTOM - </div>
+        <div class="bg-marquee-text">GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ -
+            CUSTOM - GRILLZ - CUSTOM - </div>
+        <div class="bg-marquee-text">GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ -
+            CUSTOM - GRILLZ - CUSTOM - </div>
+        <div class="bg-marquee-text">GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ -
+            CUSTOM - GRILLZ - CUSTOM - </div>
+        <div class="bg-marquee-text">GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ -
+            CUSTOM - GRILLZ - CUSTOM - </div>
+        <div class="bg-marquee-text">GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ -
+            CUSTOM - GRILLZ - CUSTOM - </div>
+        <div class="bg-marquee-text">GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ -
+            CUSTOM - GRILLZ - CUSTOM - </div>
+        <div class="bg-marquee-text">GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ -
+            CUSTOM - GRILLZ - CUSTOM - </div>
+        <div class="bg-marquee-text">GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ -
+            CUSTOM - GRILLZ - CUSTOM - </div>
+        <div class="bg-marquee-text">GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ -
+            CUSTOM - GRILLZ - CUSTOM - </div>
+        <div class="bg-marquee-text">GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ -
+            CUSTOM - GRILLZ - CUSTOM - </div>
+        <div class="bg-marquee-text">GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ - CUSTOM - GRILLZ -
+            CUSTOM - GRILLZ - CUSTOM - </div>
     </div>
 
     <!-- TOP NAV BAR -->
@@ -187,7 +547,7 @@
         <nav class="top-bar">
             <div class="logo">Ivy's</div>
             <div class="nav-links">
-                <a href="index.html" data-edit="text">Custom</a>
+                <a href="index.html" data-edit="text">Home</a>
                 <a href="work.html" data-edit="text">Gallery</a>
                 <a href="about.html" data-edit="text">About</a>
                 <a href="capabilities.html" data-edit="text">Process</a>
@@ -211,34 +571,50 @@
 
     <div class="page-content">
         <h1 class="page-title" data-edit="text">WORK-WORK-WORK-</h1>
-        
+
         <div class="work-grid">
             <div class="work-card">
-                <div class="work-img-container"><div class="work-img" data-edit="bg" style="background-image: url('https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=800');"></div></div>
+                <div class="work-img-container">
+                    <div class="work-img" data-edit="bg"
+                        style="background-image: url('pictures/55d7f21507f728cde3a536a078927ffc.jpg');">
+                    </div>
+                </div>
                 <div class="work-meta">
                     <span class="work-client" data-edit="text">18K SOLID GOLD</span>
                     <h3 class="work-title" data-edit="text">CLASSIC</h3>
                 </div>
             </div>
-            
+
             <div class="work-card">
-                <div class="work-img-container"><div class="work-img" data-edit="bg" style="background-image: url('https://images.unsplash.com/photo-1599643478524-fb524458fcc7?q=80&w=800');"></div></div>
+                <div class="work-img-container">
+                    <div class="work-img" data-edit="bg"
+                        style="background-image: url('pictures/03ba7686febd92f3604332150f0d817e.jpg');">
+                    </div>
+                </div>
                 <div class="work-meta">
                     <span class="work-client" data-edit="text">VVS DIAMOND SET</span>
                     <h3 class="work-title" data-edit="text">ICED OUT</h3>
                 </div>
             </div>
-            
+
             <div class="work-card">
-                <div class="work-img-container"><div class="work-img" data-edit="bg" style="background-image: url('https://images.unsplash.com/photo-1620653696229-8260a99ff1e3?q=80&w=800');"></div></div>
+                <div class="work-img-container">
+                    <div class="work-img" data-edit="bg"
+                        style="background-image: url('pictures/127b4fc60be21cec470174d41b3d2baa.jpg');">
+                    </div>
+                </div>
                 <div class="work-meta">
                     <span class="work-client" data-edit="text">CUSTOM DESIGN</span>
                     <h3 class="work-title" data-edit="text">OPAL INLAY</h3>
                 </div>
             </div>
-            
+
             <div class="work-card">
-                <div class="work-img-container"><div class="work-img" data-edit="bg" style="background-image: url('https://images.unsplash.com/photo-1599643477874-c5a8106a71fa?q=80&w=800');"></div></div>
+                <div class="work-img-container">
+                    <div class="work-img" data-edit="bg"
+                        style="background-image: url('pictures/17ab522dcd94c9a0871bdf226045eaa0.jpg');">
+                    </div>
+                </div>
                 <div class="work-meta">
                     <span class="work-client" data-edit="text">PLATINUM CUT</span>
                     <h3 class="work-title" data-edit="text">FANGS</h3>
@@ -246,58 +622,72 @@
             </div>
 
             <div class="work-card">
-                <div class="work-img-container"><div class="work-img" data-edit="bg" style="background-image: url('https://images.unsplash.com/photo-1620653696229-8260a99ff1e3?q=80&w=800');"></div></div>
+                <div class="work-img-container">
+                    <div class="work-img" data-edit="bg"
+                        style="background-image: url('pictures/441d751ec6656340d49b4e07ade92a0b.jpg');">
+                    </div>
+                </div>
                 <div class="work-meta">
                     <span class="work-client" data-edit="text">FULL ARCH</span>
                     <h3 class="work-title" data-edit="text">ROSE GOLD</h3>
                 </div>
             </div>
-            
+
             <div class="work-card">
-                <div class="work-img-container"><div class="work-img" data-edit="bg" style="background-image: url('https://images.unsplash.com/photo-1596944924616-7b38e7cfac36?q=80&w=800');"></div></div>
+                <div class="work-img-container">
+                    <div class="work-img" data-edit="bg"
+                        style="background-image: url('pictures/94a30832dee71af65360628cf4db6db6.jpg');">
+                    </div>
+                </div>
                 <div class="work-meta">
                     <span class="work-client" data-edit="text">SINGLE CAP</span>
                     <h3 class="work-title" data-edit="text">STARBURST</h3>
                 </div>
             </div>
         </div>
+
+
     </div>
 
     <div class="footer-block">
         <!-- PANEL 5: FOOTER (Redesigned) -->
         <section class="panel-footer">
-                    <div class="footer-grid">
-                        <!-- Top Row -->
-                        <div class="f-top-left">
-                            <h1 data-edit="text">HIT US</h1>
-                            <h1 class="accent-txt" data-edit="text">UP</h1>
-                        </div>
-                        <div class="f-top-right">
-                            <img src="https://images.unsplash.com/photo-1544604862-2782ceca00d2?q=80&w=400&auto=format&fit=crop" style="width: 20vw; height: 18vw; object-fit: cover; border-radius: 10px; border: 2px solid var(--dark-bg);">
-                        </div>
-                        
-                        <!-- Middle Row -->
-                        <div class="f-mid-left">
-                            <div class="f-mid-left-col">
-                                <h2 data-edit="text">IVY'S GRILLZ</h2>
-                                <p data-edit="text">CUSTOM SMILES, WORLDWIDE</p>
-                            </div>
-                            <div class="social-links">
-                                <div class="social-box">IG</div>
-                                <div class="social-box">IN</div>
-                                <div class="social-box">SP</div>
-                                <div class="social-box">FB</div>
-                            </div>
-                        </div>
+            <div class="footer-grid">
+                <!-- Top Row -->
+                <div class="f-top-left">
+                    <h1 data-edit="text">HIT US</h1>
+                    <h1 class="accent-txt" data-edit="text">UP</h1>
+                </div>
+                <div class="f-top-right">
+                    <img src="pictures/bbec56426984e9571e729b3b71178092.jpg"
+                        style="width: 20vw; height: 18vw; object-fit: cover; border-radius: 10px; border: 2px solid var(--dark-bg);">
+                </div>
 
-                        
-                        <!-- Bottom Row -->
-                        <div class="f-bot-left">
-                            <div class="staff-row"><span data-edit="text">IVY</span><span data-edit="text">FOUNDER & JEWELER</span></div>
-                            <div class="staff-row"><span data-edit="text">CUSTOM INQUIRIES</span><span data-edit="text">DM ON INSTAGRAM</span></div>
-                            <div class="staff-row"><span data-edit="text">INFO@IVYSGRILLZ.COM</span><span data-edit="text">555.987.6543</span></div>
-                        </div>
+                <!-- Middle Row -->
+                <div class="f-mid-left">
+                    <div class="f-mid-left-col">
+                        <h2 data-edit="text">IVY'S GRILLZ</h2>
+                        <p data-edit="text">CUSTOM SMILES, WORLDWIDE</p>
                     </div>
+                    <div class="social-links">
+                        <div class="social-box">IG</div>
+                        <div class="social-box">IN</div>
+                        <div class="social-box">SP</div>
+                        <div class="social-box">FB</div>
+                    </div>
+                </div>
+
+
+                <!-- Bottom Row -->
+                <div class="f-bot-left">
+                    <div class="staff-row"><span data-edit="text">IVY</span><span data-edit="text">FOUNDER &
+                            JEWELER</span></div>
+                    <div class="staff-row"><span data-edit="text">CUSTOM INQUIRIES</span><span data-edit="text">DM ON
+                            INSTAGRAM</span></div>
+                    <div class="staff-row"><span data-edit="text">INFO@IVYSGRILLZ.COM</span><span
+                            data-edit="text">555.987.6543</span></div>
+                </div>
+            </div>
         </section>
     </div>
 
@@ -308,33 +698,33 @@
 
     <script>
         // --- 1. ADMIN & INLINE CMS LOGIC ---
-        (function(){
+        (function () {
             const logo = document.querySelector('.logo');
             const authModal = document.getElementById('_adm_m');
             const authBtn = document.getElementById('_adm_b');
             const passInput = document.getElementById('_adm_i');
             const toolbar = document.getElementById('_adm_toolbar');
             const exitBtn = document.getElementById('_adm_exit');
-            
+
             let clicks = 0;
-            
+
             // Open auth modal / reload
             logo.addEventListener('click', () => {
-                if(document.body.classList.contains('admin-active')) return;
+                if (document.body.classList.contains('admin-active')) return;
                 clicks++;
-                
+
                 // Keep the triple-click admin intact, but reload on single-click delay
                 setTimeout(() => {
-                    if(clicks === 1) {
+                    if (clicks === 1) {
                         window.location.href = 'index.html';
                     }
-                    if(clicks < 3) clicks = 0;
+                    if (clicks < 3) clicks = 0;
                 }, 400);
 
-                if(clicks === 3) {
+                if (clicks === 3) {
                     authModal.style.display = 'flex';
                     passInput.focus();
-                    clicks = 0; 
+                    clicks = 0;
                 }
             });
 
@@ -342,7 +732,7 @@
             authBtn.addEventListener('click', () => {
                 const p = passInput.value;
                 // Base64 for 'ivy' is 'aXZ5'
-                if(btoa(p.toLowerCase()) === 'aXZ5') {
+                if (btoa(p.toLowerCase()) === 'aXZ5') {
                     authModal.style.display = 'none';
                     passInput.value = '';
                     enableAdminMode();
@@ -351,7 +741,7 @@
 
             // Enter key to login
             passInput.addEventListener('keypress', (e) => {
-                if(e.key === 'Enter') authBtn.click();
+                if (e.key === 'Enter') authBtn.click();
             });
 
             // GSAP Refresh Debouncer
@@ -364,7 +754,7 @@
             function enableAdminMode() {
                 document.body.classList.add('admin-active');
                 toolbar.style.display = 'flex';
-                
+
                 // 1. Make Text Editable
                 document.querySelectorAll('[data-edit="text"]').forEach(el => {
                     el.setAttribute('contenteditable', 'true');
@@ -378,14 +768,14 @@
             }
 
             function handleImageEdit(e) {
-                if(!document.body.classList.contains('admin-active')) return;
-                
+                if (!document.body.classList.contains('admin-active')) return;
+
                 const currentBg = window.getComputedStyle(this).backgroundImage;
                 const urlMatch = currentBg.match(/url\(['"]?(.*?)['"]?\)/);
                 const currentUrl = urlMatch ? urlMatch[1] : '';
 
                 const newUrl = prompt("Enter new image URL:", currentUrl);
-                if(newUrl && newUrl !== currentUrl) {
+                if (newUrl && newUrl !== currentUrl) {
                     this.style.backgroundImage = `url('${newUrl}')`;
                 }
             }
@@ -394,7 +784,7 @@
             exitBtn.addEventListener('click', () => {
                 document.body.classList.remove('admin-active');
                 toolbar.style.display = 'none';
-                
+
                 document.querySelectorAll('[data-edit="text"]').forEach(el => {
                     el.removeAttribute('contenteditable');
                     el.removeEventListener('input', debouncedRefresh);
@@ -416,8 +806,45 @@
         gsap.from(".page-title", { y: 50, opacity: 0, duration: 1, ease: "back.out(1.2)", delay: 0.2 });
         gsap.from(".work-card", { y: 100, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power2.out", delay: 0.4 });
 
+        // Expand View All Card
+        gsap.to(".view-all-card", {
+            scrollTrigger: {
+                trigger: ".view-all-container",
+                start: "top 80%", // Moved up slightly to trigger earlier
+                end: "center center",
+                scrub: 1 // Adding smoothing to the scrub
+            },
+            width: "95vw",
+            ease: "none"
+        });
+
+        // Parallax scroll text
+        gsap.to(".view-all-text", {
+            scrollTrigger: {
+                trigger: ".view-all-container",
+                start: "top 90%",
+                end: "bottom top",
+                scrub: true
+            },
+            left: "5%",
+            ease: "none"
+        });
+
+        // Parallax scroll arrow
+        gsap.to(".view-all-arrow", {
+            scrollTrigger: {
+                trigger: ".view-all-container",
+                start: "top 90%",
+                end: "bottom top",
+                scrub: true
+            },
+            right: "5%",
+            ease: "none"
+        });
+
         // SANDBOX SHORTCUT: press I → V → Y
-        (function(){ const s=['i','v','y']; let p=0; document.addEventListener('keydown',(e)=>{ if(e.key.toLowerCase()===s[p]){p++; if(p===s.length){window.location.href='sandbox.html';p=0;}} else {p=e.key.toLowerCase()===s[0]?1:0;}}); })();
+        (function () { const s = ['i', 'v', 'y']; let p = 0; document.addEventListener('keydown', (e) => { if (e.key.toLowerCase() === s[p]) { p++; if (p === s.length) { window.location.href = 'sandbox.html'; p = 0; } } else { p = e.key.toLowerCase() === s[0] ? 1 : 0; } }); })();
     </script>
 </body>
+
 </html>

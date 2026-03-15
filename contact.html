@@ -1,22 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ivy's Grillz - Custom Smiles</title>
-    
+
     <!-- Note: 'Shrikhand' is used to replicate the commercial 'Marvin Visions' font seen on the Sasquatch Sunset poster -->
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Shrikhand&family=Inter:ital,wght@0,400;0,600;0,800;1,400;1,600&family=Yellowtail&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Shrikhand&family=Inter:ital,wght@0,400;0,600;0,800;1,400;1,600&family=Yellowtail&display=swap"
+        rel="stylesheet">
+
     <style>
         :root {
-            --cream: #e6e3ce;
+            --cream: #DAD7CD;
             --dark-bg: #222426;
-            --accent: #dfff00; /* Adjusted highlighter green */
-            --nav-height: 80px;
+            --accent: #588157;
+            --accent-light: #A3B18A;
+            --nav-height: 5vw;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
         body {
             background-color: var(--dark-bg);
@@ -26,28 +34,80 @@
         }
 
         /* --- SUBPAGE TYPOGRAPHY SETTINGS --- */
-        .page-content { padding-top: calc(var(--nav-height) + 5vw); width: 100vw; display: flex; flex-direction: column; align-items: center; }
-        .page-title { font-family: 'Shrikhand', cursive; font-size: 8vw; color: var(--accent); margin-bottom: 3vw; text-shadow: 2px 2px 0px #000; text-align: center; line-height: 1; text-transform: uppercase; }
+        .page-content {
+            padding-top: calc(var(--nav-height) + 5vw);
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page-title {
+            font-family: 'Shrikhand', cursive;
+            font-size: 8vw;
+            color: var(--accent);
+            margin-bottom: 3vw;
+            text-shadow: 2px 2px 0px #000;
+            text-align: center;
+            line-height: 1;
+            text-transform: uppercase;
+        }
 
         .top-bar-container {
-            position: fixed; top: 0; left: 0; width: 100vw; height: var(--nav-height); 
-            display: flex; justify-content: center; align-items: center; z-index: 9999; pointer-events: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: var(--nav-height);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            pointer-events: none;
         }
+
         .top-bar {
-            width: 98vw; height: calc(100% - 2vw);
+            width: 98vw;
+            height: calc(100% - 1vw);
             background-color: var(--dark-bg);
             border: 2px solid var(--cream);
-            border-radius: 8px;
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 0 4vw; pointer-events: auto;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2vw;
+            pointer-events: auto;
         }
+
         .logo {
-            font-family: 'Yellowtail', cursive; font-size: 42px; color: var(--accent);
-            cursor: pointer; user-select: none; line-height: 1; text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            font-family: 'Yellowtail', cursive;
+            font-size: 42px;
+            color: var(--accent);
+            cursor: pointer;
+            user-select: none;
+            line-height: 1;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         }
-        .nav-links { display: flex; gap: 3vw; font-family: 'Archivo Black', sans-serif; font-size: 16px; text-transform: uppercase; letter-spacing: 1px; }
-        .nav-links a { color: var(--cream); text-decoration: none; transition: color 0.2s; }
-        .nav-links a:hover { color: var(--accent); }
+
+        .nav-links {
+            display: flex;
+            gap: 2vw;
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-left: auto;
+        }
+
+        .nav-links a {
+            color: var(--cream);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
 
         /* --- CONTACT PAGE SPECIFICS --- */
         .contact-content {
@@ -91,13 +151,13 @@
             color: var(--cream);
             margin-bottom: 2vw;
         }
-        
+
         .contact-links {
             display: flex;
             flex-direction: column;
             gap: 0.5vw;
         }
-        
+
         .contact-links a {
             font-family: 'Inter', sans-serif;
             font-size: 1.5vw;
@@ -105,7 +165,7 @@
             text-decoration: none;
             transition: color 0.2s;
         }
-        
+
         .contact-links a:hover {
             color: var(--accent);
         }
@@ -125,56 +185,242 @@
             margin-bottom: 1vw;
         }
 
-        .footer-block { width: 100vw; border-top: 2px solid var(--cream); }
+        .footer-block {
+            width: 100vw;
+            border-top: 2px solid var(--cream);
+        }
 
         /* --- ADMIN OVERLAYS --- */
-        #_adm_m { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.95); z-index: 10000; justify-content: center; align-items: center; flex-direction: column; }
-        #_adm_m input { padding: 15px; font-size: 18px; border: none; outline: none; border-radius: 5px; margin-bottom: 20px; font-family: monospace; text-align: center; width: 300px; }
-        #_adm_m button { padding: 15px 30px; background: var(--accent); color: var(--dark-bg); border: none; font-family: 'Shrikhand', cursive; font-size: 24px; cursor: pointer; border-radius: 5px; transition: transform 0.2s; }
-        #_adm_m button:hover { transform: scale(1.05); }
+        #_adm_m {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
 
-        #_adm_toolbar { display: none; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: var(--accent); color: var(--dark-bg); padding: 15px 30px; border-radius: 50px; z-index: 10000; font-family: 'Shrikhand', cursive; font-size: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); align-items: center; gap: 20px; border: 2px solid var(--cream); }
-        #_adm_exit { background: var(--dark-bg); color: var(--accent); border: none; padding: 5px 15px; border-radius: 20px; font-family: 'Inter'; font-weight: 800; font-size: 12px; cursor: pointer; transition: background 0.2s; }
-        #_adm_exit:hover { background: white; color: var(--dark-bg); }
+        #_adm_m input {
+            padding: 15px;
+            font-size: 18px;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-family: monospace;
+            text-align: center;
+            width: 300px;
+        }
+
+        #_adm_m button {
+            padding: 15px 30px;
+            background: var(--accent);
+            color: var(--dark-bg);
+            border: none;
+            font-family: 'Shrikhand', cursive;
+            font-size: 24px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: transform 0.2s;
+        }
+
+        #_adm_m button:hover {
+            transform: scale(1.05);
+        }
+
+        #_adm_toolbar {
+            display: none;
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: var(--dark-bg);
+            padding: 15px 30px;
+            border-radius: 50px;
+            z-index: 10000;
+            font-family: 'Shrikhand', cursive;
+            font-size: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            align-items: center;
+            gap: 20px;
+            border: 2px solid var(--cream);
+        }
+
+        #_adm_exit {
+            background: var(--dark-bg);
+            color: var(--accent);
+            border: none;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-family: 'Inter';
+            font-weight: 800;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        #_adm_exit:hover {
+            background: white;
+            color: var(--dark-bg);
+        }
 
         /* Admin Visual Clues when logged in */
-        body.admin-active [data-edit="text"]:hover { outline: 2px dashed rgba(255, 255, 255, 0.5); background: rgba(0,0,0,0.1); cursor: text; }
-        body.admin-active [data-edit="bg"]:hover { outline: 4px dashed var(--accent); cursor: pointer; filter: brightness(0.8); transition: filter 0.2s;}
-        [contenteditable]:empty:before { content: "Type here..."; color: gray; }
+        body.admin-active [data-edit="text"]:hover {
+            outline: 2px dashed rgba(255, 255, 255, 0.5);
+            background: rgba(0, 0, 0, 0.1);
+            cursor: text;
+        }
+
+        body.admin-active [data-edit="bg"]:hover {
+            outline: 4px dashed var(--accent);
+            cursor: pointer;
+            filter: brightness(0.8);
+            transition: filter 0.2s;
+        }
+
+        [contenteditable]:empty:before {
+            content: "Type here...";
+            color: gray;
+        }
 
 
 
         /* --- RESPONSIVE MOBILE ADAPTATION --- */
         @media (max-width: 768px) {
-            .nav-links { display: none; } /* Hide text links to save space */
-            .logo { font-size: 32px; }
-            .top-bar { height: 60px; padding: 0 4vw; width: 92vw; top: 3vw; left: 4vw; }
-            .top-bar-container { height: 60px; }
-            
-            .page-title { font-size: 15vw; }
-            .contact-content { width: 90vw; }
-            .contact-label { font-size: 3vw; }
-            .office-title { font-size: 12vw; margin-bottom: 2vw; line-height: 0.9;}
-            .office-location { font-size: 5vw; margin-bottom: 5vw;}
-            .contact-links a { font-size: 4vw; margin-bottom: 2vw;}
-            .sub-office { grid-template-columns: 1fr; gap: 8vw; }
-            .sub-office-block h3 { font-size: 6vw; margin-bottom: 3vw;}
-            
-            .footer-grid { grid-template-columns: 1fr; grid-template-rows: auto auto auto auto; }
-            .f-top-left h1 { font-size: 18vw; }
-            .f-top-right img { width: 40vw; height: 40vw; }
-            .f-mid-left { flex-direction: column; gap: 5vw; text-align: center; }
-            .f-mid-left-col h2 { font-size: 8vw; }
-            .f-mid-left-col p { font-size: 3vw; }
-            .social-box { width: 10vw; height: 10vw; font-size: 4vw; }
-            .f-right-span { grid-column: 1; grid-row: 4; border-top: 2px solid var(--dark-bg); padding: 5vw 0; border-bottom: 2px solid var(--dark-bg); }
-            .spin-reach { width: 50vw; height: 50vw; }
-            .f-bot-left { padding-top: 5vw;}
-            .staff-row { font-size: 2.5vw; flex-direction: column; gap: 1vw; text-align: center; padding: 4vw; }
-            .f-top-left, .f-top-right, .f-mid-left, .f-bot-left { border-right: none; }
+            .nav-links {
+                display: none;
+            }
+
+            /* Hide text links to save space */
+            .logo {
+                font-size: 32px;
+            }
+
+            .top-bar {
+                height: 60px;
+                padding: 0 4vw;
+                width: 92vw;
+                top: 3vw;
+                left: 4vw;
+            }
+
+            .top-bar-container {
+                height: 60px;
+            }
+
+            .page-title {
+                font-size: 15vw;
+            }
+
+            .contact-content {
+                width: 90vw;
+            }
+
+            .contact-label {
+                font-size: 3vw;
+            }
+
+            .office-title {
+                font-size: 12vw;
+                margin-bottom: 2vw;
+                line-height: 0.9;
+            }
+
+            .office-location {
+                font-size: 5vw;
+                margin-bottom: 5vw;
+            }
+
+            .contact-links a {
+                font-size: 4vw;
+                margin-bottom: 2vw;
+            }
+
+            .sub-office {
+                grid-template-columns: 1fr;
+                gap: 8vw;
+            }
+
+            .sub-office-block h3 {
+                font-size: 6vw;
+                margin-bottom: 3vw;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto auto;
+            }
+
+            .f-top-left h1 {
+                font-size: 18vw;
+            }
+
+            .f-top-right img {
+                width: 40vw;
+                height: 40vw;
+            }
+
+            .f-mid-left {
+                flex-direction: column;
+                gap: 5vw;
+                text-align: center;
+            }
+
+            .f-mid-left-col h2 {
+                font-size: 8vw;
+            }
+
+            .f-mid-left-col p {
+                font-size: 3vw;
+            }
+
+            .social-box {
+                width: 10vw;
+                height: 10vw;
+                font-size: 4vw;
+            }
+
+            .f-right-span {
+                grid-column: 1;
+                grid-row: 4;
+                border-top: 2px solid var(--dark-bg);
+                padding: 5vw 0;
+                border-bottom: 2px solid var(--dark-bg);
+            }
+
+            .spin-reach {
+                width: 50vw;
+                height: 50vw;
+            }
+
+            .f-bot-left {
+                padding-top: 5vw;
+            }
+
+            .staff-row {
+                font-size: 2.5vw;
+                flex-direction: column;
+                gap: 1vw;
+                text-align: center;
+                padding: 4vw;
+            }
+
+            .f-top-left,
+            .f-top-right,
+            .f-mid-left,
+            .f-bot-left {
+                border-right: none;
+            }
         }
     </style>
 </head>
+
 <body>
 
 
@@ -184,7 +430,7 @@
         <nav class="top-bar">
             <div class="logo">Ivy's</div>
             <div class="nav-links">
-                <a href="index.html" data-edit="text">Custom</a>
+                <a href="index.html" data-edit="text">Home</a>
                 <a href="work.html" data-edit="text">Gallery</a>
                 <a href="about.html" data-edit="text">About</a>
                 <a href="capabilities.html" data-edit="text">Process</a>
@@ -214,7 +460,7 @@
                 <span class="contact-label" data-edit="text">MAIN STUDIO</span>
                 <h2 class="office-title" data-edit="text">IVY'S GRILLZ</h2>
                 <span class="office-location" data-edit="text">Los Angeles, CA</span>
-                
+
                 <div class="contact-links">
                     <a href="mailto:info@ivysgrillz.com" data-edit="text">info@ivysgrillz.com</a>
                     <a href="tel:5559876543" data-edit="text">555.987.6543</a>
@@ -223,7 +469,7 @@
 
             <div class="contact-group">
                 <span class="contact-label" data-edit="text">REPRESENTATION</span>
-                
+
                 <div class="sub-office">
                     <div class="sub-office-block">
                         <h3 data-edit="text">EAST COAST</h3>
@@ -248,38 +494,42 @@
     <div class="footer-block">
         <!-- PANEL 5: FOOTER (Redesigned) -->
         <section class="panel-footer">
-                    <div class="footer-grid">
-                        <!-- Top Row -->
-                        <div class="f-top-left">
-                            <h1 data-edit="text">HIT US</h1>
-                            <h1 class="accent-txt" data-edit="text">UP</h1>
-                        </div>
-                        <div class="f-top-right">
-                            <img src="https://images.unsplash.com/photo-1544604862-2782ceca00d2?q=80&w=400&auto=format&fit=crop" style="width: 20vw; height: 18vw; object-fit: cover; border-radius: 10px; border: 2px solid var(--dark-bg);">
-                        </div>
-                        
-                        <!-- Middle Row -->
-                        <div class="f-mid-left">
-                            <div class="f-mid-left-col">
-                                <h2 data-edit="text">IVY'S GRILLZ</h2>
-                                <p data-edit="text">CUSTOM SMILES, WORLDWIDE</p>
-                            </div>
-                            <div class="social-links">
-                                <div class="social-box">IG</div>
-                                <div class="social-box">IN</div>
-                                <div class="social-box">SP</div>
-                                <div class="social-box">FB</div>
-                            </div>
-                        </div>
+            <div class="footer-grid">
+                <!-- Top Row -->
+                <div class="f-top-left">
+                    <h1 data-edit="text">HIT US</h1>
+                    <h1 class="accent-txt" data-edit="text">UP</h1>
+                </div>
+                <div class="f-top-right">
+                    <img src="pictures/bbec56426984e9571e729b3b71178092.jpg"
+                        style="width: 20vw; height: 18vw; object-fit: cover; border-radius: 10px; border: 2px solid var(--dark-bg);">
+                </div>
 
-                        
-                        <!-- Bottom Row -->
-                        <div class="f-bot-left">
-                            <div class="staff-row"><span data-edit="text">IVY</span><span data-edit="text">FOUNDER & JEWELER</span></div>
-                            <div class="staff-row"><span data-edit="text">CUSTOM INQUIRIES</span><span data-edit="text">DM ON INSTAGRAM</span></div>
-                            <div class="staff-row"><span data-edit="text">INFO@IVYSGRILLZ.COM</span><span data-edit="text">555.987.6543</span></div>
-                        </div>
+                <!-- Middle Row -->
+                <div class="f-mid-left">
+                    <div class="f-mid-left-col">
+                        <h2 data-edit="text">IVY'S GRILLZ</h2>
+                        <p data-edit="text">CUSTOM SMILES, WORLDWIDE</p>
                     </div>
+                    <div class="social-links">
+                        <div class="social-box">IG</div>
+                        <div class="social-box">IN</div>
+                        <div class="social-box">SP</div>
+                        <div class="social-box">FB</div>
+                    </div>
+                </div>
+
+
+                <!-- Bottom Row -->
+                <div class="f-bot-left">
+                    <div class="staff-row"><span data-edit="text">IVY</span><span data-edit="text">FOUNDER &
+                            JEWELER</span></div>
+                    <div class="staff-row"><span data-edit="text">CUSTOM INQUIRIES</span><span data-edit="text">DM ON
+                            INSTAGRAM</span></div>
+                    <div class="staff-row"><span data-edit="text">INFO@IVYSGRILLZ.COM</span><span
+                            data-edit="text">555.987.6543</span></div>
+                </div>
+            </div>
         </section>
     </div>
 
@@ -290,32 +540,32 @@
 
     <script>
         // --- 1. ADMIN & INLINE CMS LOGIC ---
-        (function(){
+        (function () {
             const logo = document.querySelector('.logo');
             const authModal = document.getElementById('_adm_m');
             const authBtn = document.getElementById('_adm_b');
             const passInput = document.getElementById('_adm_i');
             const toolbar = document.getElementById('_adm_toolbar');
             const exitBtn = document.getElementById('_adm_exit');
-            
+
             let clicks = 0;
-            
+
             // Open auth modal / reload
             logo.addEventListener('click', () => {
-                if(document.body.classList.contains('admin-active')) return;
+                if (document.body.classList.contains('admin-active')) return;
                 clicks++;
-                
+
                 setTimeout(() => {
-                    if(clicks === 1) {
+                    if (clicks === 1) {
                         window.location.href = 'index.html';
                     }
-                    if(clicks < 3) clicks = 0;
+                    if (clicks < 3) clicks = 0;
                 }, 400);
 
-                if(clicks === 3) {
+                if (clicks === 3) {
                     authModal.style.display = 'flex';
                     passInput.focus();
-                    clicks = 0; 
+                    clicks = 0;
                 }
             });
 
@@ -323,7 +573,7 @@
             authBtn.addEventListener('click', () => {
                 const p = passInput.value;
                 // Base64 for 'ivy' is 'aXZ5'
-                if(btoa(p.toLowerCase()) === 'aXZ5') {
+                if (btoa(p.toLowerCase()) === 'aXZ5') {
                     authModal.style.display = 'none';
                     passInput.value = '';
                     enableAdminMode();
@@ -332,7 +582,7 @@
 
             // Enter key to login
             passInput.addEventListener('keypress', (e) => {
-                if(e.key === 'Enter') authBtn.click();
+                if (e.key === 'Enter') authBtn.click();
             });
 
             // GSAP Refresh Debouncer
@@ -345,7 +595,7 @@
             function enableAdminMode() {
                 document.body.classList.add('admin-active');
                 toolbar.style.display = 'flex';
-                
+
                 // 1. Make Text Editable
                 document.querySelectorAll('[data-edit="text"]').forEach(el => {
                     el.setAttribute('contenteditable', 'true');
@@ -359,14 +609,14 @@
             }
 
             function handleImageEdit(e) {
-                if(!document.body.classList.contains('admin-active')) return;
-                
+                if (!document.body.classList.contains('admin-active')) return;
+
                 const currentBg = window.getComputedStyle(this).backgroundImage;
                 const urlMatch = currentBg.match(/url\(['"]?(.*?)['"]?\)/);
                 const currentUrl = urlMatch ? urlMatch[1] : '';
 
                 const newUrl = prompt("Enter new image URL:", currentUrl);
-                if(newUrl && newUrl !== currentUrl) {
+                if (newUrl && newUrl !== currentUrl) {
                     this.style.backgroundImage = `url('${newUrl}')`;
                 }
             }
@@ -375,7 +625,7 @@
             exitBtn.addEventListener('click', () => {
                 document.body.classList.remove('admin-active');
                 toolbar.style.display = 'none';
-                
+
                 document.querySelectorAll('[data-edit="text"]').forEach(el => {
                     el.removeAttribute('contenteditable');
                     el.removeEventListener('input', debouncedRefresh);
@@ -398,7 +648,8 @@
         gsap.from(".contact-group", { y: 30, opacity: 0, duration: 0.8, stagger: 0.2, ease: "power2.out", delay: 0.4 });
 
         // SANDBOX SHORTCUT: press I → V → Y
-        (function(){ const s=['i','v','y']; let p=0; document.addEventListener('keydown',(e)=>{ if(e.key.toLowerCase()===s[p]){p++; if(p===s.length){window.location.href='sandbox.html';p=0;}} else {p=e.key.toLowerCase()===s[0]?1:0;}}); })();
+        (function () { const s = ['i', 'v', 'y']; let p = 0; document.addEventListener('keydown', (e) => { if (e.key.toLowerCase() === s[p]) { p++; if (p === s.length) { window.location.href = 'sandbox.html'; p = 0; } } else { p = e.key.toLowerCase() === s[0] ? 1 : 0; } }); })();
     </script>
 </body>
+
 </html>

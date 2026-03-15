@@ -10,9 +10,9 @@
         rel="stylesheet">
     <style>
         :root {
-            --cream: #e6e3ce;
+            --cream: #DAD7CD;
             --dark-bg: #090a0a;
-            --accent: #dfff00;
+            --accent: #588157;
         }
 
         * {
@@ -96,20 +96,19 @@
         }
 
         .neon-glow {
-            filter:
-                drop-shadow(0 0 12px var(--accent)) drop-shadow(0 0 25px rgba(223, 255, 0, 0.6)) drop-shadow(0 0 45px rgba(223, 255, 0, 0.2));
+            filter: drop-shadow(0 0 12px var(--accent)) drop-shadow(0 0 25px rgba(88, 129, 87, 0.4));
             animation: pulse 3s ease-in-out infinite alternate;
         }
 
         @keyframes pulse {
             0% {
                 opacity: 0.85;
-                filter: drop-shadow(0 0 8px var(--accent)) drop-shadow(0 0 15px rgba(223, 255, 0, 0.4));
+                filter: drop-shadow(0 0 8px var(--accent)) drop-shadow(0 0 15px rgba(88, 129, 87, 0.3));
             }
 
             100% {
                 opacity: 1;
-                filter: drop-shadow(0 0 16px var(--accent)) drop-shadow(0 0 35px rgba(223, 255, 0, 0.7)) drop-shadow(0 0 50px rgba(223, 255, 0, 0.2));
+                filter: drop-shadow(0 0 16px var(--accent)) drop-shadow(0 0 35px rgba(88, 129, 87, 0.6));
             }
         }
 

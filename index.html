@@ -13,11 +13,11 @@
 
     <style>
         :root {
-            --cream: #e6e3ce;
+            --cream: #DAD7CD;
             --dark-bg: #222426;
-            --accent: #dfff00;
-            /* Adjusted highlighter green */
-            --nav-height: 80px;
+            --accent: #588157;
+            --accent-light: #A3B18A;
+            --nav-height: 5vw;
         }
 
         * {
@@ -49,14 +49,14 @@
 
         .top-bar {
             width: 98vw;
-            height: calc(100% - 2vw);
+            height: calc(100% - 1vw);
             background-color: var(--dark-bg);
             border: 2px solid var(--cream);
-            border-radius: 8px;
+            border-radius: 4px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 4vw;
+            padding: 0 2vw;
             pointer-events: auto;
         }
 
@@ -72,11 +72,12 @@
 
         .nav-links {
             display: flex;
-            gap: 3vw;
+            gap: 2vw;
             font-family: 'Archivo Black', sans-serif;
-            font-size: 16px;
+            font-size: 14px;
             text-transform: uppercase;
             letter-spacing: 1px;
+            margin-left: auto;
         }
 
         .nav-links a {
@@ -159,7 +160,7 @@
         .teeth {
             width: 12vw;
             height: 12vw;
-            background: url('https://images.unsplash.com/photo-1522880757530-9b3b85d0d82d?q=80&w=400') center/cover;
+            background: url('pictures/441d751ec6656340d49b4e07ade92a0b.jpg') center/cover;
             border-radius: 50%;
             border: 4px solid var(--accent);
             margin-bottom: 2vw;
@@ -167,7 +168,7 @@
 
         /* PANEL 1.5: SEPARATOR */
         .panel-sep {
-            width: 7vw;
+            width: 5.5vw;
             height: 100%;
             display: flex;
             justify-content: center;
@@ -177,10 +178,10 @@
         }
 
         .sep-inner {
-            width: 5vw;
-            height: calc(100% - 3vw);
+            width: 4.5vw;
+            height: calc(100% - 1vw);
             border: 2px solid var(--cream);
-            border-radius: 8px;
+            border-radius: 4px;
             overflow: hidden;
             display: flex;
             justify-content: center;
@@ -198,11 +199,10 @@
             writing-mode: vertical-rl;
             text-transform: uppercase;
             font-family: 'Archivo Black', sans-serif;
-            font-size: 2vw;
-            letter-spacing: 0.3vw;
+            font-size: 1.8vw;
+            letter-spacing: 0.5vw;
             white-space: nowrap;
-            color: transparent;
-            -webkit-text-stroke: 1px var(--cream);
+            color: var(--cream);
             padding-bottom: 2vw;
         }
 
@@ -228,7 +228,8 @@
             display: flex;
             flex-direction: column;
             width: 100%;
-            padding: 4vw 2vw;
+            padding: 4vw 2vw 1.5vw 2vw;
+            /* Bottom padding matches sep-inner offset so blank card aligns with SMILES bottom */
             align-items: center;
         }
 
@@ -244,6 +245,11 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
             cursor: pointer;
+        }
+
+        .card:last-child {
+            margin-bottom: 3vw;
+            /* Compensates for smaller blank card wrapper to align with SMILES separator */
         }
 
         /* HOVER STATES */
@@ -288,6 +294,27 @@
             letter-spacing: -1px;
             text-transform: uppercase;
             transition: color 0.3s ease;
+        }
+
+
+
+        /* --- SCROLL-GROWING BLANK END CARD --- */
+        .blank-card-container {
+            width: 90%;
+            height: 9vw;
+            margin: 0 auto;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        #blank-end-card {
+            width: 100%;
+            height: 1vw;
+            /* Starting height, user adjusted */
+            background: transparent;
+            border: 2px solid var(--cream);
+            border-radius: 8px;
+            box-sizing: border-box;
         }
 
         /* PANEL 3: ABOUT TEXT */
@@ -371,7 +398,8 @@
 
         .w-ital {
             font-family: 'Inter', sans-serif;
-            font-style: italic;
+            font-style: normal;
+            /* No more slant */
             font-weight: 600;
             font-size: 1.5vw;
             color: var(--accent);
@@ -408,7 +436,8 @@
 
         .inter-it {
             font-family: 'Inter', sans-serif;
-            font-style: italic;
+            font-style: normal;
+            /* No more slant */
             font-weight: 600;
             color: var(--accent);
             letter-spacing: -1px;
@@ -491,6 +520,8 @@
             gap: 2vw;
             margin-top: 5vh;
             height: 45vh;
+            width: 150vw;
+            /* Widen so it can scroll */
         }
 
         .feed-item {
@@ -939,6 +970,8 @@
                 flex-direction: column;
                 height: auto;
                 gap: 5vw;
+                width: 100%;
+                /* Reset on mobile */
             }
 
             .feed-item {
@@ -1023,7 +1056,7 @@
         <nav class="top-bar">
             <div class="logo">Ivy's</div>
             <div class="nav-links">
-                <a href="index.html" data-edit="text">Custom</a>
+                <a href="index.html" data-edit="text">Home</a>
                 <a href="work.html" data-edit="text">Gallery</a>
                 <a href="about.html" data-edit="text">About</a>
                 <a href="capabilities.html" data-edit="text">Process</a>
@@ -1067,14 +1100,14 @@
                 <section class="panel panel-sep">
                     <div class="sep-inner">
                         <div class="vertical-marquee-content">
-                            <span class="vertical-text">SMILES • SMILES • SMILES • SMILES • SMILES • SMILES • SMILES •
-                                SMILES • SMILES • SMILES • </span>
-                            <span class="vertical-text">SMILES • SMILES • SMILES • SMILES • SMILES • SMILES • SMILES •
-                                SMILES • SMILES • SMILES • </span>
-                            <span class="vertical-text">SMILES • SMILES • SMILES • SMILES • SMILES • SMILES • SMILES •
-                                SMILES • SMILES • SMILES • </span>
-                            <span class="vertical-text">SMILES • SMILES • SMILES • SMILES • SMILES • SMILES • SMILES •
-                                SMILES • SMILES • SMILES • </span>
+                            <span class="vertical-text">SMILE • SMILE • SMILE • SMILE • SMILE • SMILE • SMILE •
+                                SMILE • SMILE • SMILE • </span>
+                            <span class="vertical-text">SMILE • SMILE • SMILE • SMILE • SMILE • SMILE • SMILE •
+                                SMILE • SMILE • SMILE • </span>
+                            <span class="vertical-text">SMILE • SMILE • SMILE • SMILE • SMILE • SMILE • SMILE •
+                                SMILE • SMILE • SMILE • </span>
+                            <span class="vertical-text">SMILE • SMILE • SMILE • SMILE • SMILE • SMILE • SMILE •
+                                SMILE • SMILE • SMILE • </span>
                         </div>
                     </div>
                 </section>
@@ -1084,31 +1117,35 @@
                     <div class="work-scroller">
                         <div class="card">
                             <div class="card-img" data-edit="bg"
-                                style="background-image: url('https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=800');">
+                                style="background-image: url('pictures/55d7f21507f728cde3a536a078927ffc.jpg');">
                             </div>
                             <p data-edit="text">18K SOLID GOLD</p>
                             <h3 data-edit="text">CLASSIC</h3>
                         </div>
                         <div class="card">
                             <div class="card-img" data-edit="bg"
-                                style="background-image: url('https://images.unsplash.com/photo-1599643478524-fb524458fcc7?q=80&w=800');">
+                                style="background-image: url('pictures/03ba7686febd92f3604332150f0d817e.jpg');">
                             </div>
                             <p data-edit="text">VVS DIAMOND SET</p>
                             <h3 data-edit="text">ICED OUT</h3>
                         </div>
                         <div class="card">
                             <div class="card-img" data-edit="bg"
-                                style="background-image: url('https://images.unsplash.com/photo-1620653696229-8260a99ff1e3?q=80&w=800');">
+                                style="background-image: url('pictures/127b4fc60be21cec470174d41b3d2baa.jpg');">
                             </div>
                             <p data-edit="text">CUSTOM DESIGN</p>
                             <h3 data-edit="text">OPAL INLAY</h3>
                         </div>
                         <div class="card">
                             <div class="card-img" data-edit="bg"
-                                style="background-image: url('https://images.unsplash.com/photo-1599643477874-c5a8106a71fa?q=80&w=800');">
+                                style="background-image: url('pictures/17ab522dcd94c9a0871bdf226045eaa0.jpg');">
                             </div>
                             <p data-edit="text">PLATINUM CUT</p>
                             <h3 data-edit="text">FANGS</h3>
+                        </div>
+                        <!-- SCROLL-GROWING BLANK OUTLINE CARD -->
+                        <div class="blank-card-container">
+                            <div id="blank-end-card"></div>
                         </div>
                     </div>
                 </section>
@@ -1156,8 +1193,7 @@
                         </div>
                         <div class="line">
                             <span class="w-huge" data-edit="text">DIAMONDS,</span>
-                            <span class="w-small" style="font-family:'Inter', sans-serif; font-style:italic;"
-                                data-edit="text">AND</span>
+                            <span class="w-small" data-edit="text">AND</span>
                             <span class="w-ital" data-edit="text">crafting</span>
                             <span class="w-bold" data-edit="text">GRILLZ</span>
                         </div>
@@ -1183,16 +1219,16 @@
                     </div>
                     <div class="feed-grid">
                         <div class="feed-item" data-edit="bg"
-                            style="background-image: url('https://images.unsplash.com/photo-1620653696229-8260a99ff1e3?q=80&w=800');">
+                            style="background-image: url('pictures/2d85d6454cd859f34fcbcdf26082848b.jpg');">
                         </div>
                         <div class="feed-item" data-edit="bg"
-                            style="background-image: url('https://images.unsplash.com/photo-1596944924616-7b38e7cfac36?q=80&w=800');">
+                            style="background-image: url('pictures/42430466ea50c066e4cd772afadd1331.jpg');">
                         </div>
                         <div class="feed-item" data-edit="bg"
-                            style="background-image: url('https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=800');">
+                            style="background-image: url('pictures/4aa3b2cf0ad7dca2c4ea5f26c25c91fa.jpg');">
                         </div>
                         <div class="feed-item" data-edit="bg"
-                            style="background-image: url('https://images.unsplash.com/photo-1599643477874-c5a8106a71fa?q=80&w=800');">
+                            style="background-image: url('pictures/8af4dd0eeb2a28ee43435f33e0d0dfa5.jpg');">
                         </div>
                     </div>
                 </section>
@@ -1206,15 +1242,15 @@
                             <h1 class="accent-txt" data-edit="text">UP</h1>
                         </div>
                         <div class="f-top-right">
-                            <img src="https://images.unsplash.com/photo-1544604862-2782ceca00d2?q=80&w=400&auto=format&fit=crop"
+                            <img src="pictures/bbec56426984e9571e729b3b71178092.jpg"
                                 style="width: 20vw; height: 18vw; object-fit: cover; border-radius: 10px; border: 2px solid var(--dark-bg);">
                         </div>
 
                         <!-- Middle Row -->
                         <div class="f-mid-left">
                             <div class="f-mid-left-col">
-                                <h2 data-edit="text">IVY'S GRILLZ</h2>
-                                <p data-edit="text">CUSTOM SMILES, WORLDWIDE</p>
+                                <h2 data-edit="text">VIV GRILLZ</h2>
+                                <p data-edit="text">CUSTOM DENTAL JEWELRY — GERMANY</p>
                             </div>
                             <div class="social-links">
                                 <div class="social-box">IG</div>
@@ -1243,12 +1279,12 @@
 
                         <!-- Bottom Row -->
                         <div class="f-bot-left">
-                            <div class="staff-row"><span data-edit="text">IVY</span><span data-edit="text">FOUNDER &
+                            <div class="staff-row"><span data-edit="text">IVY</span><span data-edit="text">FOUNDER &amp;
                                     JEWELER</span></div>
                             <div class="staff-row"><span data-edit="text">CUSTOM INQUIRIES</span><span
-                                    data-edit="text">DM ON INSTAGRAM</span></div>
-                            <div class="staff-row"><span data-edit="text">INFO@IVYSGRILLZ.COM</span><span
-                                    data-edit="text">555.987.6543</span></div>
+                                    data-edit="text">MAIL OR CALL</span></div>
+                            <div class="staff-row"><span data-edit="text">ivy.val04@gmail.com</span><span
+                                    data-edit="text">+49 24855329</span></div>
                         </div>
                     </div>
                 </section>
@@ -1389,8 +1425,7 @@
 
             const getXPausePoint = () => {
                 const heroWidth = document.querySelector('.panel-hero').offsetWidth;
-                const sepWidth = document.querySelector('.panel-sep').offsetWidth;
-                return -(heroWidth + sepWidth);
+                return -heroWidth;
             };
 
             tl.to(container, { x: getXPausePoint, ease: "none", duration: 1 });
@@ -1401,14 +1436,29 @@
                 duration: 1.2
             });
 
+            // Grow the blank outline card as vertical scroll reaches the bottom
+            tl.to("#blank-end-card", {
+                height: "9vw",
+                duration: 1.0,
+                ease: "none"
+            }, "-=1.0"); // Grows throughout the majority of the vertical scroll for visibility
+
+
             tl.to(container, {
                 x: () => -(container.scrollWidth - window.innerWidth),
                 ease: "none",
                 duration: 2
             });
 
+            // Make the feed grid move opposite to scroll to simulate continuous scrolling 
+            tl.to(".feed-grid", {
+                x: "-50vw",
+                ease: "none",
+                duration: 2
+            }, "<"); // animate horizontally alongside the panel movement
+
             return () => { // Clears timeline and inline styles automatically on resize beneath 769px
-                gsap.set([container, workScroller], { clearProps: "all" });
+                gsap.set([container, workScroller, ".feed-grid"], { clearProps: "all" });
             };
         });
 
