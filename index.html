@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ivy's Grillz - Custom Smiles</title>
+
+    <!-- Note: 'Shrikhand' is used to replicate the commercial 'Marvin Visions' font seen on the Sasquatch Sunset poster -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Shrikhand&family=Inter:ital,wght@0,400;0,600;0,800;1,400;1,600&family=Yellowtail&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --cream: #e6e3ce;
+            --dark-bg: #222426;
+            --accent: #dfff00;
+            /* Adjusted highlighter green */
+            --nav-height: 80px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--cream);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            overscroll-behavior: none;
+        }
+
+        .top-bar-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: var(--nav-height);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .top-bar {
+            width: 98vw;
+            height: calc(100% - 2vw);
+            background-color: var(--dark-bg);
+            border: 2px solid var(--cream);
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 4vw;
+            pointer-events: auto;
+        }
+
+        .logo {
+            font-family: 'Yellowtail', cursive;
+            font-size: 42px;
+            color: var(--accent);
+            cursor: pointer;
+            user-select: none;
+            line-height: 1;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3vw;
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a {
+            color: var(--cream);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .scroll-master {
+            padding-top: calc(var(--nav-height));
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+        }
+
+        .horizontal-wrapper {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .scroll-container {
+            display: flex;
+            height: 100%;
+            width: max-content;
+        }
+
+        .panel {
+            height: 100%;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        /* PANEL 1: HERO */
+        .panel-hero {
+            width: 75vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .hero-line {
+            font-family: 'Shrikhand', cursive;
+            line-height: 0.9;
+            text-transform: uppercase;
+        }
+
+        .text-med {
+            font-size: 5vw;
+            color: var(--cream);
+            letter-spacing: -1px;
+            margin: 0;
+        }
+
+        .text-huge-accent {
+            font-size: 16vw;
+            color: var(--accent);
+            margin: -1vh 0;
+            letter-spacing: -3px;
+        }
+
+        .text-huge-cream {
+            font-size: 16vw;
+            color: var(--cream);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2vw;
+            margin-top: -1vh;
+            letter-spacing: -3px;
+        }
+
+        .teeth {
+            width: 12vw;
+            height: 12vw;
+            background: url('https://images.unsplash.com/photo-1522880757530-9b3b85d0d82d?q=80&w=400') center/cover;
+            border-radius: 50%;
+            border: 4px solid var(--accent);
+            margin-bottom: 2vw;
+        }
+
+        /* PANEL 1.5: SEPARATOR */
+        .panel-sep {
+            width: 7vw;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: var(--dark-bg);
+            z-index: 10;
+        }
+
+        .sep-inner {
+            width: 5vw;
+            height: calc(100% - 3vw);
+            border: 2px solid var(--cream);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            position: relative;
+        }
+
+        .vertical-marquee-content {
+            display: flex;
+            flex-direction: column;
+            animation: marquee-up 25s linear infinite;
+        }
+
+        .vertical-text {
+            writing-mode: vertical-rl;
+            text-transform: uppercase;
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 2vw;
+            letter-spacing: 0.3vw;
+            white-space: nowrap;
+            color: transparent;
+            -webkit-text-stroke: 1px var(--cream);
+            padding-bottom: 2vw;
+        }
+
+        @keyframes marquee-up {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(-50%);
+            }
+        }
+
+        /* PANEL 2: WORK LIST */
+        .panel-work {
+            width: 35vw;
+            background-color: var(--dark-bg);
+            color: var(--dark-bg);
+            overflow: hidden;
+        }
+
+        .work-scroller {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            padding: 4vw 2vw;
+            align-items: center;
+        }
+
+        .card {
+            background: var(--cream);
+            padding: 1.5vw;
+            padding-bottom: 3vw;
+            border-radius: 4px;
+            margin-bottom: 3vw;
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        /* HOVER STATES */
+        .card:hover {
+            background: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        .card:hover h3 {
+            color: var(--dark-bg);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 26vw;
+            background-color: #ccc;
+            background-size: cover;
+            background-position: center;
+            border-radius: 2px;
+            margin-bottom: 2vw;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .card p {
+            font-size: 1vw;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 0.5vw;
+            text-transform: uppercase;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .card h3 {
+            font-family: 'Shrikhand', cursive;
+            font-size: 3.5vw;
+            color: var(--accent);
+            /* Now green by default */
+            text-align: center;
+            line-height: 1;
+            margin: 0;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        /* PANEL 3: ABOUT TEXT */
+        .panel-about {
+            width: 65vw;
+            background-color: var(--dark-bg);
+            padding: 5vw 8vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .spinning-seal-container {
+            position: relative;
+            width: 15vw;
+            height: 15vw;
+            margin: 0 auto 3vw auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .spinning-seal {
+            width: 100%;
+            height: 100%;
+            animation: spin 10s linear infinite;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .spinning-seal text {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 14px;
+            /* Scaled down to fit 3 repetitions */
+            fill: var(--cream);
+            letter-spacing: 2.8px;
+            text-transform: uppercase;
+        }
+
+        .spinning-seal .star {
+            fill: var(--accent);
+            /* Stars are now green */
+        }
+
+        /* --- CLEAN TYPOGRAPHY UTILITIES FOR PANEL 3 --- */
+        .about-text {
+            text-align: center;
+            color: var(--cream);
+            position: relative;
+            z-index: 3;
+            width: 95%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .about-text .line {
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            gap: 1.2vw;
+            margin-bottom: -0.5vw;
+            /* Tighter vertical spacing */
+        }
+
+        /* Typography sizes matching the Stiff layout proportionally */
+        .w-bold {
+            font-family: 'Shrikhand', cursive;
+            font-size: 2vw;
+            color: var(--cream);
+            letter-spacing: -1px;
+        }
+
+        .w-ital {
+            font-family: 'Inter', sans-serif;
+            font-style: italic;
+            font-weight: 600;
+            font-size: 1.5vw;
+            color: var(--accent);
+            letter-spacing: -1px;
+        }
+
+        .w-huge {
+            font-family: 'Shrikhand', cursive;
+            font-size: 3.5vw;
+            color: var(--cream);
+            letter-spacing: -2px;
+            line-height: 0.9;
+        }
+
+        .w-small {
+            font-family: 'Shrikhand', cursive;
+            font-size: 1vw;
+            color: #888;
+        }
+
+        .w-inter {
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+            font-size: 1.2vw;
+            color: var(--cream);
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        .shrik {
+            font-family: 'Shrikhand', cursive;
+            letter-spacing: 0.1vw;
+        }
+
+        .inter-it {
+            font-family: 'Inter', sans-serif;
+            font-style: italic;
+            font-weight: 600;
+            color: var(--accent);
+            letter-spacing: -1px;
+        }
+
+        .inter-up {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        .sz-g-xl {
+            font-size: 4.5vw;
+            text-shadow: 2px 2px 0px #000;
+        }
+
+        .sz-g-l {
+            font-size: 3vw;
+            text-shadow: 1px 1px 0px #000;
+        }
+
+        .sz-g-m {
+            font-size: 2vw;
+        }
+
+        .sz-g-s {
+            font-size: 1.5vw;
+        }
+
+        .line-1 {
+            margin-bottom: 0.5vw;
+        }
+
+        .line-2 {
+            margin-bottom: 0.5vw;
+        }
+
+        .line-3 {
+            margin-bottom: 0.5vw;
+        }
+
+        .line-4 {
+            margin-left: 5vw;
+            margin-bottom: 0.5vw;
+        }
+
+        .line-5 {
+            margin-bottom: 0.5vw;
+        }
+
+        .line-6 {
+            margin-bottom: 0.5vw;
+        }
+
+        /* PANEL 4: FEED */
+        .panel-feed {
+            width: 100vw;
+            padding: 5vw;
+            border-left: 2px solid var(--cream);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .feed-header {
+            display: flex;
+            align-items: center;
+            gap: 5vw;
+        }
+
+        .feed-titles h1 {
+            font-family: 'Shrikhand', cursive;
+            font-size: 7vw;
+            line-height: 1;
+        }
+
+        .feed-grid {
+            display: flex;
+            gap: 2vw;
+            margin-top: 5vh;
+            height: 45vh;
+        }
+
+        .feed-item {
+            flex: 1;
+            background: #ccc;
+            background-size: cover;
+            background-position: center;
+            border-radius: 5px;
+            border: 2px solid var(--accent);
+        }
+
+        /* PANEL 5: FOOTER (Redesigned like Stiff) */
+        .panel-footer {
+            width: 100vw;
+            background: var(--cream);
+            color: var(--dark-bg);
+            display: flex;
+            flex-direction: column;
+            border-left: 2px solid var(--dark-bg);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 70% 30%;
+            grid-template-rows: auto auto 1fr;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Top Row */
+        .f-top-left {
+            border-bottom: 2px solid var(--dark-bg);
+            border-right: 2px solid var(--dark-bg);
+            padding: 4vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .f-top-right {
+            border-bottom: 2px solid var(--dark-bg);
+            padding: 4vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .f-top-left h1 {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 10vw;
+            line-height: 0.8;
+            letter-spacing: -2px;
+        }
+
+        .f-top-left .accent-txt {
+            color: var(--accent);
+        }
+
+        /* Middle Row */
+        .f-mid-left {
+            border-bottom: 2px solid var(--dark-bg);
+            border-right: 2px solid var(--dark-bg);
+            padding: 2vw 4vw;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .f-mid-left-col h2 {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 3vw;
+            line-height: 1;
+            letter-spacing: -1px;
+        }
+
+        .f-mid-left-col p {
+            font-size: 1.2vw;
+            text-transform: uppercase;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            margin-top: 0.5vw;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1vw;
+        }
+
+        .social-box {
+            width: 3vw;
+            height: 3vw;
+            background: var(--dark-bg);
+            color: var(--cream);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 4px;
+            font-weight: 800;
+            font-size: 1vw;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .social-box:hover {
+            background: var(--accent);
+            color: var(--cream);
+        }
+
+        /* Bottom Row */
+        .f-bot-left {
+            border-right: 2px solid var(--dark-bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .staff-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 1vw 4vw;
+            border-top: 2px solid var(--dark-bg);
+            font-weight: 800;
+            font-size: 0.8vw;
+            text-transform: uppercase;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .staff-row:first-child {
+            border-top: none;
+        }
+
+        /* Right Side Spanning Mid & Bot */
+        .f-right-span {
+            grid-column: 2;
+            grid-row: 2 / 4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: var(--cream);
+        }
+
+        .spin-reach {
+            position: relative;
+            width: 14vw;
+            height: 14vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .spin-reach-text {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            animation: spin 15s linear infinite;
+        }
+
+        .spin-arrow {
+            font-size: 5vw;
+            color: var(--dark-bg);
+            transform: rotate(-45deg);
+            line-height: 1;
+            margin-top: 1vw;
+        }
+
+        /* --- ADMIN OVERLAYS --- */
+        #_adm_m {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        #_adm_m input {
+            padding: 15px;
+            font-size: 18px;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-family: monospace;
+            text-align: center;
+            width: 300px;
+        }
+
+        #_adm_m button {
+            padding: 15px 30px;
+            background: var(--accent);
+            color: var(--dark-bg);
+            border: none;
+            font-family: 'Shrikhand', cursive;
+            font-size: 24px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: transform 0.2s;
+        }
+
+        #_adm_m button:hover {
+            transform: scale(1.05);
+        }
+
+        #_adm_toolbar {
+            display: none;
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: var(--dark-bg);
+            padding: 15px 30px;
+            border-radius: 50px;
+            z-index: 10000;
+            font-family: 'Shrikhand', cursive;
+            font-size: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            align-items: center;
+            gap: 20px;
+            border: 2px solid var(--cream);
+        }
+
+        #_adm_exit {
+            background: var(--dark-bg);
+            color: var(--accent);
+            border: none;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-family: 'Inter';
+            font-weight: 800;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        #_adm_exit:hover {
+            background: white;
+            color: var(--dark-bg);
+        }
+
+        /* Admin Visual Clues when logged in */
+        body.admin-active [data-edit="text"]:hover {
+            outline: 2px dashed rgba(255, 255, 255, 0.5);
+            background: rgba(0, 0, 0, 0.1);
+            cursor: text;
+        }
+
+        body.admin-active [data-edit="bg"]:hover {
+            outline: 4px dashed var(--accent);
+            cursor: pointer;
+            filter: brightness(0.8);
+            transition: filter 0.2s;
+        }
+
+        [contenteditable]:empty:before {
+            content: "Type here...";
+            color: gray;
+        }
+
+
+
+        /* --- RESPONSIVE MOBILE ADAPTATION --- */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            /* Hide text links to save space */
+            .logo {
+                font-size: 32px;
+            }
+
+            .top-bar {
+                height: 60px;
+                padding: 0 4vw;
+                width: 92vw;
+                top: 3vw;
+                left: 4vw;
+            }
+
+            .top-bar-container {
+                height: 60px;
+            }
+
+            .scroll-master {
+                height: auto;
+                padding-top: calc(60px + 6vw);
+                overflow: visible;
+            }
+
+            .horizontal-wrapper {
+                overflow: visible;
+                height: auto;
+            }
+
+            .scroll-container {
+                flex-direction: column;
+                width: 100vw;
+                height: auto;
+            }
+
+            .panel {
+                width: 100vw !important;
+                height: auto;
+                border: none !important;
+                border-top: 2px solid var(--dark-bg) !important;
+                padding: 10vw 5vw !important;
+            }
+
+            .panel-hero {
+                height: auto;
+                min-height: 80vh;
+                padding-top: 15vh !important;
+            }
+
+            .text-huge-accent,
+            .text-huge-cream {
+                font-size: 28vw;
+                letter-spacing: -2px;
+            }
+
+            .text-med {
+                font-size: 8vw;
+            }
+
+            .teeth {
+                width: 25vw;
+                height: 25vw;
+                border-width: 2px;
+            }
+
+            .panel-sep {
+                height: auto;
+                overflow: hidden;
+                padding: 5vw !important;
+                border-top: none !important;
+            }
+
+            .sep-inner {
+                width: 90vw;
+                height: 12vw;
+                border-radius: 6vw;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+            }
+
+            .vertical-marquee-content {
+                flex-direction: row;
+                animation: marquee-left 10s linear infinite;
+            }
+
+            .vertical-text {
+                writing-mode: horizontal-tb;
+                font-size: 5vw;
+                padding-bottom: 0;
+                padding-right: 5vw;
+            }
+
+            @keyframes marquee-left {
+                0% {
+                    transform: translateX(0%);
+                }
+
+                100% {
+                    transform: translateX(-50%);
+                }
+            }
+
+            .panel-work {
+                padding: 5vw !important;
+            }
+
+            .work-scroller {
+                padding: 0;
+            }
+
+            .card {
+                padding-right: 0;
+                padding-bottom: 10vw;
+            }
+
+            .card-img {
+                height: 90vw;
+            }
+
+            .card h3 {
+                font-size: 6vw;
+            }
+
+            .card p {
+                font-size: 3vw;
+            }
+
+            .spinning-seal {
+                width: 20vw;
+                height: 20vw;
+                margin-bottom: 8vw;
+            }
+
+            .dash-line {
+                height: 8vw;
+                top: -8vw;
+            }
+
+            .sz-g-xl {
+                font-size: 7vw;
+            }
+
+            .sz-g-l {
+                font-size: 6vw;
+            }
+
+            .sz-g-m {
+                font-size: 5vw;
+            }
+
+            .sz-g-s {
+                font-size: 4vw;
+            }
+
+            .line-4 {
+                margin-left: 0;
+            }
+
+            .panel-feed {
+                padding-bottom: 15vw !important;
+            }
+
+            .feed-header {
+                align-items: flex-end;
+            }
+
+            .feed-titles h1 {
+                font-size: 14vw;
+            }
+
+            .feed-grid {
+                flex-direction: column;
+                height: auto;
+                gap: 5vw;
+            }
+
+            .feed-item {
+                height: 80vw;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto auto;
+            }
+
+            .f-top-left h1 {
+                font-size: 14vw;
+            }
+
+            .f-top-right img {
+                width: 40vw;
+                height: 40vw;
+            }
+
+            .f-mid-left {
+                flex-direction: column;
+                gap: 5vw;
+                text-align: center;
+            }
+
+            .f-mid-left-col h2 {
+                font-size: 6vw;
+            }
+
+            .f-mid-left-col p {
+                font-size: 3vw;
+            }
+
+            .social-box {
+                width: 10vw;
+                height: 10vw;
+                font-size: 4vw;
+            }
+
+            .f-right-span {
+                grid-column: 1;
+                grid-row: 4;
+                border-top: 2px solid var(--dark-bg);
+                padding: 5vw 0;
+                border-bottom: 2px solid var(--dark-bg);
+            }
+
+            .spin-reach {
+                width: 35vw;
+                height: 35vw;
+            }
+
+            .f-bot-left {
+                padding-top: 5vw;
+            }
+
+            .staff-row {
+                font-size: 2.5vw;
+                flex-direction: column;
+                gap: 1vw;
+                text-align: center;
+                padding: 4vw;
+            }
+
+            .f-top-left,
+            .f-top-right,
+            .f-mid-left,
+            .f-bot-left {
+                border-right: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+    <!-- TOP NAV BAR -->
+    <div class="top-bar-container">
+        <nav class="top-bar">
+            <div class="logo">Ivy's</div>
+            <div class="nav-links">
+                <a href="index.html" data-edit="text">Custom</a>
+                <a href="work.html" data-edit="text">Gallery</a>
+                <a href="about.html" data-edit="text">About</a>
+                <a href="capabilities.html" data-edit="text">Process</a>
+                <a href="contact.html" data-edit="text">Contact</a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- HIDDEN ADMIN MODALS -->
+    <div id="_adm_m">
+        <h2 style="color: white; font-family: 'Inter'; font-weight: 800; margin-bottom: 20px;">RESTRICTED ACCESS</h2>
+        <input type="password" id="_adm_i" placeholder="Passcode (Hint: ivy)" autocomplete="off">
+        <button id="_adm_b">AUTHORIZE</button>
+    </div>
+
+    <!-- FLOATING ACTIVE ADMIN TOOLBAR -->
+    <div id="_adm_toolbar">
+        <span>ADMIN MODE ACTIVE</span>
+        <button id="_adm_exit">EXIT ADMIN</button>
+    </div>
+
+    <!-- HORIZONTAL WRAPPER -->
+    <div class="scroll-master">
+        <div class="horizontal-wrapper">
+            <div class="scroll-container">
+
+                <!-- PANEL 1: HERO -->
+                <section class="panel panel-hero">
+                    <div class="hero-line text-med" data-edit="text">WE MAKE</div>
+                    <div class="hero-line text-huge-accent" data-edit="text">SMILES</div>
+                    <div class="hero-line text-med" data-edit="text">THAT LOOK</div>
+                    <div class="hero-line text-med" data-edit="text">DAMN</div>
+                    <div class="hero-line text-huge-cream">
+                        <span data-edit="text">GO</span>
+                        <!-- BG Editable -->
+                        <div class="teeth" data-edit="bg"></div>
+                        <span data-edit="text">OD</span>
+                    </div>
+                </section>
+
+                <section class="panel panel-sep">
+                    <div class="sep-inner">
+                        <div class="vertical-marquee-content">
+                            <span class="vertical-text">SMILES • SMILES • SMILES • SMILES • SMILES • SMILES • SMILES •
+                                SMILES • SMILES • SMILES • </span>
+                            <span class="vertical-text">SMILES • SMILES • SMILES • SMILES • SMILES • SMILES • SMILES •
+                                SMILES • SMILES • SMILES • </span>
+                            <span class="vertical-text">SMILES • SMILES • SMILES • SMILES • SMILES • SMILES • SMILES •
+                                SMILES • SMILES • SMILES • </span>
+                            <span class="vertical-text">SMILES • SMILES • SMILES • SMILES • SMILES • SMILES • SMILES •
+                                SMILES • SMILES • SMILES • </span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PANEL 2: VERTICAL SCROLLING WORK LIST -->
+                <section class="panel panel-work">
+                    <div class="work-scroller">
+                        <div class="card">
+                            <div class="card-img" data-edit="bg"
+                                style="background-image: url('https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=800');">
+                            </div>
+                            <p data-edit="text">18K SOLID GOLD</p>
+                            <h3 data-edit="text">CLASSIC</h3>
+                        </div>
+                        <div class="card">
+                            <div class="card-img" data-edit="bg"
+                                style="background-image: url('https://images.unsplash.com/photo-1599643478524-fb524458fcc7?q=80&w=800');">
+                            </div>
+                            <p data-edit="text">VVS DIAMOND SET</p>
+                            <h3 data-edit="text">ICED OUT</h3>
+                        </div>
+                        <div class="card">
+                            <div class="card-img" data-edit="bg"
+                                style="background-image: url('https://images.unsplash.com/photo-1620653696229-8260a99ff1e3?q=80&w=800');">
+                            </div>
+                            <p data-edit="text">CUSTOM DESIGN</p>
+                            <h3 data-edit="text">OPAL INLAY</h3>
+                        </div>
+                        <div class="card">
+                            <div class="card-img" data-edit="bg"
+                                style="background-image: url('https://images.unsplash.com/photo-1599643477874-c5a8106a71fa?q=80&w=800');">
+                            </div>
+                            <p data-edit="text">PLATINUM CUT</p>
+                            <h3 data-edit="text">FANGS</h3>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PANEL 3: STATIC ABOUT TEXT -->
+                <section class="panel panel-about">
+                    <div class="spinning-seal-container">
+                        <svg class="spinning-seal" viewBox="0 0 200 200">
+                            <defs>
+                                <path id="textPathOut" d="M 100, 100 m -85, 0 a 85,85 0 1,1 170,0 a 85,85 0 1,1 -170,0"
+                                    fill="transparent" />
+                            </defs>
+
+                            <!-- Simplified single-line text map to avoid overlap and ensure perfect spacing -->
+                            <text>
+                                <textPath href="#textPathOut" startOffset="0%">
+                                    <tspan fill="var(--cream)">SHINE BRIGHT</tspan>
+                                    <tspan fill="var(--accent)" style="font-size: 18px;"> * </tspan>
+                                    <tspan fill="var(--cream)">SHINE BRIGHT</tspan>
+                                    <tspan fill="var(--accent)" style="font-size: 18px;"> * </tspan>
+                                    <tspan fill="var(--cream)">SHINE BRIGHT</tspan>
+                                    <tspan fill="var(--accent)" style="font-size: 18px;"> *
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tspan>
+                                </textPath>
+                            </text>
+                        </svg>
+                    </div>
+
+                    <div class="about-text">
+                        <div class="line">
+                            <span class="w-bold" data-edit="text">HI, </span>
+                            <span class="w-ital" data-edit="text">I'm Ivy.</span>
+                            <span class="w-bold" data-edit="text">AT JUST</span>
+                            <span class="w-small" data-edit="text">21,</span>
+                        </div>
+                        <div class="line">
+                            <span class="w-huge" data-edit="text">I'VE BEEN</span>
+                            <span class="w-ital" data-edit="text">shaping</span>
+                            <span class="w-bold" data-edit="text">METAL,</span>
+                        </div>
+                        <div class="line">
+                            <span class="w-inter" data-edit="text">SWEATING</span>
+                            <span class="w-huge" data-edit="text">DETAILS,</span>
+                            <span class="w-inter" data-edit="text">SETTING</span>
+                        </div>
+                        <div class="line">
+                            <span class="w-huge" data-edit="text">DIAMONDS,</span>
+                            <span class="w-small" style="font-family:'Inter', sans-serif; font-style:italic;"
+                                data-edit="text">AND</span>
+                            <span class="w-ital" data-edit="text">crafting</span>
+                            <span class="w-bold" data-edit="text">GRILLZ</span>
+                        </div>
+                        <div class="line">
+                            <span class="w-inter" data-edit="text">FOR</span>
+                            <span class="w-huge" data-edit="text">BIG ASS</span>
+                            <span class="w-small" data-edit="text">(AND TINY ASS)</span>
+                        </div>
+                        <div class="line">
+                            <span class="w-huge" data-edit="text">SMILES.</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PANEL 4: FEED -->
+                <section class="panel panel-feed">
+                    <div class="feed-header">
+                        <div class="feed-titles">
+                            <h1 style="color: var(--cream);" data-edit="text">ON THE</h1>
+                            <h1 style="color: var(--accent);" data-edit="text">GRAM</h1>
+                        </div>
+                        <div style="font-size: 8vw;" data-edit="text">📸</div>
+                    </div>
+                    <div class="feed-grid">
+                        <div class="feed-item" data-edit="bg"
+                            style="background-image: url('https://images.unsplash.com/photo-1620653696229-8260a99ff1e3?q=80&w=800');">
+                        </div>
+                        <div class="feed-item" data-edit="bg"
+                            style="background-image: url('https://images.unsplash.com/photo-1596944924616-7b38e7cfac36?q=80&w=800');">
+                        </div>
+                        <div class="feed-item" data-edit="bg"
+                            style="background-image: url('https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=800');">
+                        </div>
+                        <div class="feed-item" data-edit="bg"
+                            style="background-image: url('https://images.unsplash.com/photo-1599643477874-c5a8106a71fa?q=80&w=800');">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PANEL 5: FOOTER (Redesigned) -->
+                <section class="panel panel-footer">
+                    <div class="footer-grid">
+                        <!-- Top Row -->
+                        <div class="f-top-left">
+                            <h1 data-edit="text">HIT US</h1>
+                            <h1 class="accent-txt" data-edit="text">UP</h1>
+                        </div>
+                        <div class="f-top-right">
+                            <img src="https://images.unsplash.com/photo-1544604862-2782ceca00d2?q=80&w=400&auto=format&fit=crop"
+                                style="width: 20vw; height: 18vw; object-fit: cover; border-radius: 10px; border: 2px solid var(--dark-bg);">
+                        </div>
+
+                        <!-- Middle Row -->
+                        <div class="f-mid-left">
+                            <div class="f-mid-left-col">
+                                <h2 data-edit="text">IVY'S GRILLZ</h2>
+                                <p data-edit="text">CUSTOM SMILES, WORLDWIDE</p>
+                            </div>
+                            <div class="social-links">
+                                <div class="social-box">IG</div>
+                                <div class="social-box">IN</div>
+                                <div class="social-box">SP</div>
+                                <div class="social-box">FB</div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column (Spanning Mid & Bot) -->
+                        <div class="f-right-span">
+                            <div class="spin-reach">
+                                <svg class="spin-reach-text" viewBox="0 0 200 200">
+                                    <path id="circlePath"
+                                        d="M 100, 100 m -70, 0 a 70,70 0 1,1 140,0 a 70,70 0 1,1 -140,0"
+                                        fill="transparent" />
+                                    <text font-family="'Archivo Black', sans-serif" font-size="20" font-weight="900"
+                                        fill="currentColor" letter-spacing="4">
+                                        <textPath href="#circlePath" startOffset="0%">REACH OUT * REACH OUT * REACH OUT
+                                            * </textPath>
+                                    </text>
+                                </svg>
+                                <div class="spin-arrow">↗</div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Row -->
+                        <div class="f-bot-left">
+                            <div class="staff-row"><span data-edit="text">IVY</span><span data-edit="text">FOUNDER &
+                                    JEWELER</span></div>
+                            <div class="staff-row"><span data-edit="text">CUSTOM INQUIRIES</span><span
+                                    data-edit="text">DM ON INSTAGRAM</span></div>
+                            <div class="staff-row"><span data-edit="text">INFO@IVYSGRILLZ.COM</span><span
+                                    data-edit="text">555.987.6543</span></div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- LIBRARIES -->
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script>
+        // --- 1. ADMIN & INLINE CMS LOGIC ---
+        (function () {
+            const logo = document.querySelector('.logo');
+            const authModal = document.getElementById('_adm_m');
+            const authBtn = document.getElementById('_adm_b');
+            const passInput = document.getElementById('_adm_i');
+            const toolbar = document.getElementById('_adm_toolbar');
+            const exitBtn = document.getElementById('_adm_exit');
+
+            let clicks = 0;
+
+            // Open auth modal / reload
+            logo.addEventListener('click', () => {
+                if (document.body.classList.contains('admin-active')) return;
+                clicks++;
+
+                // Keep the triple-click admin intact, but reload on single-click delay
+                setTimeout(() => {
+                    if (clicks === 1) {
+                        window.scrollTo(0, 0);
+                        location.reload();
+                    }
+                    if (clicks < 3) clicks = 0;
+                }, 400);
+
+                if (clicks === 3) {
+                    authModal.style.display = 'flex';
+                    passInput.focus();
+                    clicks = 0;
+                }
+            });
+
+            // Handle Login
+            authBtn.addEventListener('click', () => {
+                const p = passInput.value;
+                // Base64 for 'ivy' is 'aXZ5'
+                if (btoa(p.toLowerCase()) === 'aXZ5') {
+                    authModal.style.display = 'none';
+                    passInput.value = '';
+                    enableAdminMode();
+                } else { alert('Access Denied. Nice try.'); }
+            });
+
+            // Enter key to login
+            passInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') authBtn.click();
+            });
+
+            // GSAP Refresh Debouncer
+            let refreshTimeout;
+            const debouncedRefresh = () => {
+                clearTimeout(refreshTimeout);
+                refreshTimeout = setTimeout(() => ScrollTrigger.refresh(), 500);
+            };
+
+            function enableAdminMode() {
+                document.body.classList.add('admin-active');
+                toolbar.style.display = 'flex';
+
+                // 1. Make Text Editable
+                document.querySelectorAll('[data-edit="text"]').forEach(el => {
+                    el.setAttribute('contenteditable', 'true');
+                    el.addEventListener('input', debouncedRefresh);
+                });
+
+                // 2. Make Images Clickable
+                document.querySelectorAll('[data-edit="bg"]').forEach(el => {
+                    el.addEventListener('click', handleImageEdit);
+                });
+            }
+
+            function handleImageEdit(e) {
+                if (!document.body.classList.contains('admin-active')) return;
+
+                const currentBg = window.getComputedStyle(this).backgroundImage;
+                const urlMatch = currentBg.match(/url\(['"]?(.*?)['"]?\)/);
+                const currentUrl = urlMatch ? urlMatch[1] : '';
+
+                const newUrl = prompt("Enter new image URL:", currentUrl);
+                if (newUrl && newUrl !== currentUrl) {
+                    this.style.backgroundImage = `url('${newUrl}')`;
+                }
+            }
+
+            // Exit Admin Mode
+            exitBtn.addEventListener('click', () => {
+                document.body.classList.remove('admin-active');
+                toolbar.style.display = 'none';
+
+                document.querySelectorAll('[data-edit="text"]').forEach(el => {
+                    el.removeAttribute('contenteditable');
+                    el.removeEventListener('input', debouncedRefresh);
+                });
+                document.querySelectorAll('[data-edit="bg"]').forEach(el => {
+                    el.removeEventListener('click', handleImageEdit);
+                });
+            });
+        })();
+
+        // --- 2. SMOOTH SCROLLING (SYNCED WITH GSAP) ---
+        const lenis = new Lenis({ duration: 0.8 });
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => lenis.raf(time * 1000));
+        gsap.ticker.lagSmoothing(0);
+
+        // --- 3. BULLETPROOF GSAP TIMELINE ---
+        gsap.registerPlugin(ScrollTrigger);
+        let mm = gsap.matchMedia();
+
+        const container = document.querySelector(".scroll-container");
+        const workScroller = document.querySelector(".work-scroller");
+        const getScrollAmount = () => (container.scrollWidth + workScroller.scrollHeight) * 0.8;
+
+        mm.add("(min-width: 769px)", () => {
+            let tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: ".scroll-master",
+                    pin: true,
+                    scrub: 1,
+                    end: () => "+=" + getScrollAmount(),
+                    invalidateOnRefresh: true
+                }
+            });
+
+            const getXPausePoint = () => {
+                const heroWidth = document.querySelector('.panel-hero').offsetWidth;
+                const sepWidth = document.querySelector('.panel-sep').offsetWidth;
+                return -(heroWidth + sepWidth);
+            };
+
+            tl.to(container, { x: getXPausePoint, ease: "none", duration: 1 });
+
+            tl.to(workScroller, {
+                y: () => -(workScroller.scrollHeight - document.querySelector('.panel-work').clientHeight),
+                ease: "none",
+                duration: 1.2
+            });
+
+            tl.to(container, {
+                x: () => -(container.scrollWidth - window.innerWidth),
+                ease: "none",
+                duration: 2
+            });
+
+            return () => { // Clears timeline and inline styles automatically on resize beneath 769px
+                gsap.set([container, workScroller], { clearProps: "all" });
+            };
+        });
+
+        // --- 4. NAVIGATION FUNCTIONALITY (Removed due to Multi-Page routing) ---
+
+        // --- 6. SANDBOX SHORTCUT: press I then V then Y to jump to sandbox ---
+        (function () {
+            const seq = ['i', 'v', 'y']; let pos = 0;
+            document.addEventListener('keydown', (e) => {
+                if (e.key.toLowerCase() === seq[pos]) {
+                    pos++;
+                    if (pos === seq.length) { window.location.href = 'sandbox.html'; pos = 0; }
+                } else { pos = e.key.toLowerCase() === seq[0] ? 1 : 0; }
+            });
+        })();
+    </script>
+</body>
+
+</html>
+
+</html>

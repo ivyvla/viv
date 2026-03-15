@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sandbox — Ivy's</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Shrikhand&family=Inter:wght@400;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --cream: #e6e3ce;
+            --dark-bg: #090a0a;
+            --accent: #dfff00;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--dark-bg);
+            color: var(--cream);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* --- TOP BAR --- */
+        .top-bar {
+            position: fixed;
+            top: 1vw;
+            left: 1vw;
+            right: 1vw;
+            height: 52px;
+            background: rgba(9, 10, 10, 0.8);
+            border: 2px solid var(--cream);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 3vw;
+            z-index: 999;
+        }
+
+        .logo {
+            font-family: 'Shrikhand', cursive;
+            font-size: 26px;
+            color: var(--accent);
+            text-shadow: 2px 2px 0 #000;
+            text-decoration: none;
+        }
+
+        .sandbox-tag {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent);
+            opacity: 0.45;
+        }
+
+        .back-btn {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--cream);
+            text-decoration: none;
+            border: 1px solid var(--cream);
+            border-radius: 20px;
+            padding: 5px 14px;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            background: var(--cream);
+            color: var(--dark-bg);
+        }
+
+        /* --- MAIN LOGO --- */
+        .logo-container {
+            position: relative;
+            z-index: 10;
+            width: 90vw;
+            max-width: 800px;
+        }
+
+        .neon-glow {
+            filter:
+                drop-shadow(0 0 12px var(--accent)) drop-shadow(0 0 25px rgba(223, 255, 0, 0.6)) drop-shadow(0 0 45px rgba(223, 255, 0, 0.2));
+            animation: pulse 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 0.85;
+                filter: drop-shadow(0 0 8px var(--accent)) drop-shadow(0 0 15px rgba(223, 255, 0, 0.4));
+            }
+
+            100% {
+                opacity: 1;
+                filter: drop-shadow(0 0 16px var(--accent)) drop-shadow(0 0 35px rgba(223, 255, 0, 0.7)) drop-shadow(0 0 50px rgba(223, 255, 0, 0.2));
+            }
+        }
+
+        .hint {
+            position: fixed;
+            bottom: 2vw;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: rgba(230, 227, 206, 0.25);
+            pointer-events: none;
+            font-family: 'Archivo Black', sans-serif;
+            z-index: 20;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <a href="index.html" class="logo">IVY'S</a>
+        <span class="sandbox-tag">✦ Sandbox</span>
+        <a href="index.html" class="back-btn">← Back</a>
+    </div>
+
+    <!-- CLEAN YVIIVY NEON LOGO -->
+    <div class="logo-container">
+        <svg class="neon-glow" viewBox="0 0 500 320" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <g id="teeth-logo">
+                    <!-- Top Arch shape (gumline curve) -->
+                    <path d="M 80,80 Q 250,20 420,80" fill="none" />
+
+                    <!-- Left Outer Canine (Y/Big V) -->
+                    <path d="M 95,90 L 160,250 L 205,90" fill="none" />
+
+                    <!-- Left Inner (Small V) - SHORTENED -->
+                    <path d="M 190,105 L 210,135 L 225,100" fill="none" />
+
+                    <!-- Left Center Incisor (I) -->
+                    <path d="M 235,95 L 235,160" fill="none" />
+
+                    <!-- Right Center Incisor (I) -->
+                    <path d="M 265,95 L 265,160" fill="none" />
+
+                    <!-- Right Inner (Small V) - SHORTENED -->
+                    <path d="M 275,100 L 290,135 L 310,105" fill="none" />
+
+                    <!-- Right Outer Canine (Y/Big V) -->
+                    <path d="M 295,90 L 340,250 L 405,90" fill="none" />
+                </g>
+            </defs>
+
+            <!-- Base Green Glow Stroke -->
+            <use href="#teeth-logo" stroke="var(--accent)" stroke-width="12" stroke-linecap="round"
+                stroke-linejoin="round" />
+
+            <!-- Cream Inner Core Highlight -->
+            <use href="#teeth-logo" stroke="var(--cream)" stroke-width="4" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg>
+    </div>
+
+    <div class="hint">y v i &nbsp; i v y</div>
+
+    <script>
+        // Sandbox shortcut: I → V → Y
+        (function () { const s = ['i', 'v', 'y']; let p = 0; document.addEventListener('keydown', (e) => { if (e.key.toLowerCase() === s[p]) { p++; if (p === s.length) { location.reload(); p = 0; } } else { p = e.key.toLowerCase() === s[0] ? 1 : 0; } }); })();
+    </script>
+</body>
+
+</html>
