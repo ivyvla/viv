@@ -222,6 +222,26 @@
             border: 2px solid var(--cream);
         }
 
+        #_adm_exit,
+        #_adm_dash {
+            background: var(--dark-bg);
+            color: var(--accent);
+            border: none;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-family: 'Inter';
+            font-weight: 800;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        #_adm_exit:hover,
+        #_adm_dash:hover {
+            background: white;
+            color: var(--dark-bg);
+        }
+
         #_adm_exit {
             background: var(--dark-bg);
             color: var(--accent);
@@ -235,9 +255,22 @@
             transition: background 0.2s;
         }
 
-        #_adm_exit:hover {
+        #_adm_save {
             background: white;
-            color: var(--dark-bg);
+            color: #1a1a1a;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-family: 'Inter';
+            font-weight: 800;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        #_adm_save:hover {
+            background: var(--cream);
+            transform: scale(1.05);
         }
 
         /* Admin Visual Clues when logged in */
@@ -389,6 +422,8 @@
     <!-- FLOATING ACTIVE ADMIN TOOLBAR -->
     <div id="_adm_toolbar">
         <span>ADMIN MODE ACTIVE</span>
+        <button id="_adm_save">SAVE CHANGES</button>
+        <button id="_adm_dash">DASHBOARD</button>
         <button id="_adm_exit">EXIT ADMIN</button>
     </div>
 
@@ -461,6 +496,12 @@
                     <div class="staff-row"><span data-edit="text">INFO@IVYSGRILLZ.COM</span><span
                             data-edit="text">555.987.6543</span></div>
                 </div>
+                <div
+                    style="text-align: center; padding: 2vw 0 1vw; opacity: 0.4; font-size: 11px; letter-spacing: 1px;">
+                    <a href="impressum.html"
+                        style="color: var(--cream); text-decoration: none; font-family: 'Inter', sans-serif;">IMPRESSUM
+                        & DATENSCHUTZ</a>
+                </div>
             </div>
         </section>
     </div>
@@ -479,20 +520,24 @@
             const passInput = document.getElementById('_adm_i');
             const toolbar = document.getElementById('_adm_toolbar');
             const exitBtn = document.getElementById('_adm_exit');
+            const saveBtn = document.getElementById('_adm_save');
+            const dashBtn = document.getElementById('_adm_dash');
 
             let clicks = 0;
+            let clickTimer = null;
 
-            // Open auth modal / reload
+            // Open auth modal
             logo.addEventListener('click', () => {
                 if (document.body.classList.contains('admin-active')) return;
-                clicks++;
 
-                // Keep the triple-click admin intact, but reload on single-click delay
-                setTimeout(() => {
+                clicks++;
+                clearTimeout(clickTimer);
+
+                clickTimer = setTimeout(() => {
                     if (clicks === 1) {
                         window.location.href = 'index.html';
                     }
-                    if (clicks < 3) clicks = 0;
+                    clicks = 0;
                 }, 400);
 
                 if (clicks === 3) {
@@ -505,12 +550,9 @@
             // Handle Login
             authBtn.addEventListener('click', () => {
                 const p = passInput.value;
-                // Base64 for 'ivy' is 'aXZ5'
                 if (btoa(p.toLowerCase()) === 'aXZ5') {
-                    authModal.style.display = 'none';
-                    passInput.value = '';
-                    enableAdminMode();
-                } else { alert('Access Denied. Nice try.'); }
+                    window.location.href = 'admin.html';
+                } else { alert('Access Denied.'); }
             });
 
             // Enter key to login
@@ -529,29 +571,82 @@
                 document.body.classList.add('admin-active');
                 toolbar.style.display = 'flex';
 
-                // 1. Make Text Editable
                 document.querySelectorAll('[data-edit="text"]').forEach(el => {
                     el.setAttribute('contenteditable', 'true');
                     el.addEventListener('input', debouncedRefresh);
                 });
 
-                // 2. Make Images Clickable
                 document.querySelectorAll('[data-edit="bg"]').forEach(el => {
                     el.addEventListener('click', handleImageEdit);
                 });
             }
 
+            // AUTO-ENABLE if coming from admin.html or with flag
+            if (window.location.search.includes('admin=true') || document.referrer.includes('admin.html')) {
+                enableAdminMode();
+            }
+
+            let currentImageEditTarget = null;
             function handleImageEdit(e) {
-                if (!document.body.classList.contains('admin-active')) return;
+                currentImageEditTarget = this;
+                const fileInput = document.createElement('input');
+                fileInput.type = 'file';
+                fileInput.accept = 'image/*';
+                fileInput.onchange = e => {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (event) => {
+                            currentImageEditTarget.style.backgroundImage = `url('${event.target.result}')`;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                };
+                fileInput.click();
+            }
 
-                const currentBg = window.getComputedStyle(this).backgroundImage;
-                const urlMatch = currentBg.match(/url\(['"]?(.*?)['"]?\)/);
-                const currentUrl = urlMatch ? urlMatch[1] : '';
+            // Save Functionality
+            saveBtn.addEventListener('click', async () => {
+                saveBtn.innerText = "SAVING...";
+                const data = {};
 
-                const newUrl = prompt("Enter new image URL:", currentUrl);
-                if (newUrl && newUrl !== currentUrl) {
-                    this.style.backgroundImage = `url('${newUrl}')`;
+                // 1. Scrape standard text
+                document.querySelectorAll('[data-edit="text"]').forEach((el, i) => {
+                    const key = el.getAttribute('data-key') || `text_${i}`;
+                    data[key] = el.innerText;
+                });
+
+                // 2. Scrape background images
+                document.querySelectorAll('[data-edit="bg"]').forEach((el, i) => {
+                    const style = el.style.backgroundImage;
+                    if (style) {
+                        const url = style.slice(5, -2).replace(/"/g, "");
+                        const key = el.getAttribute('data-key') || `bg_${i}`;
+                        data[key] = url;
+                    }
+                });
+
+                try {
+                    const res = await fetch('/api/data', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+                    if (res.ok) {
+                        saveBtn.innerText = "SAVED ✓";
+                        setTimeout(() => saveBtn.innerText = "SAVE CHANGES", 2000);
+                    }
+                } catch (err) {
+                    console.error(err);
+                    saveBtn.innerText = "ERROR";
                 }
+            });
+
+            // Dashboard Redirect
+            if (dashBtn) {
+                dashBtn.addEventListener('click', () => {
+                    window.location.href = 'admin.html';
+                });
             }
 
             // Exit Admin Mode
@@ -566,6 +661,13 @@
                 document.querySelectorAll('[data-edit="bg"]').forEach(el => {
                     el.removeEventListener('click', handleImageEdit);
                 });
+            });
+
+            // ESC key to exit
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && document.body.classList.contains('admin-active')) {
+                    exitBtn.click();
+                }
             });
         })();
 
@@ -582,7 +684,7 @@
         gsap.from(".team-member", { y: 50, opacity: 0, duration: 0.8, stagger: 0.15, ease: "back.out(1.2)", delay: 0.6 });
 
         // SANDBOX SHORTCUT: press I → V → Y
-        (function () { const s = ['i', 'v', 'y']; let p = 0; document.addEventListener('keydown', (e) => { if (e.key.toLowerCase() === s[p]) { p++; if (p === s.length) { window.location.href = 'sandbox.html'; p = 0; } } else { p = e.key.toLowerCase() === s[0] ? 1 : 0; } }); })();
+
     </script>
 </body>
 

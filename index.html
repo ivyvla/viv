@@ -683,9 +683,27 @@
         .spin-arrow {
             font-size: 5vw;
             color: var(--dark-bg);
-            transform: rotate(-45deg);
-            line-height: 1;
-            margin-top: 1vw;
+            position: absolute;
+            z-index: 10;
+        }
+
+        .footer-legal-link {
+            text-decoration: none;
+            color: var(--dark-bg);
+            opacity: 0.5;
+            font-size: 10px;
+            letter-spacing: 1px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+            text-transform: uppercase;
+            transition: opacity 0.3s ease;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        .footer-legal-link:hover {
+            opacity: 1;
+            color: var(--accent);
         }
 
         /* --- ADMIN OVERLAYS --- */
@@ -748,6 +766,26 @@
             align-items: center;
             gap: 20px;
             border: 2px solid var(--cream);
+        }
+
+        #_adm_exit,
+        #_adm_dash {
+            background: var(--dark-bg);
+            color: var(--accent);
+            border: none;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-family: 'Inter';
+            font-weight: 800;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        #_adm_exit:hover,
+        #_adm_dash:hover {
+            background: white;
+            color: var(--dark-bg);
         }
 
         #_adm_exit {
@@ -1075,6 +1113,10 @@
     <!-- FLOATING ACTIVE ADMIN TOOLBAR -->
     <div id="_adm_toolbar">
         <span>ADMIN MODE ACTIVE</span>
+        <button id="_adm_save"
+            style="background:white; color:#1a1a1a; border:none; padding:5px 15px; border-radius:20px; font-family:'Inter'; font-weight:800; font-size:12px; cursor:pointer;">SAVE
+            CHANGES</button>
+        <button id="_adm_dash">DASHBOARD</button>
         <button id="_adm_exit">EXIT ADMIN</button>
     </div>
 
@@ -1087,8 +1129,8 @@
                 <section class="panel panel-hero">
                     <div class="hero-line text-med" data-edit="text">WE MAKE</div>
                     <div class="hero-line text-huge-accent" data-edit="text">SMILES</div>
-                    <div class="hero-line text-med" data-edit="text">THAT LOOK</div>
-                    <div class="hero-line text-med" data-edit="text">DAMN</div>
+                    <div class="hero-line text-med" data-edit="text">LOOK THAT</div>
+                    <div class="hero-line text-med" data-edit="text">DAMMMMMMMN</div>
                     <div class="hero-line text-huge-cream">
                         <span data-edit="text">GO</span>
                         <!-- BG Editable -->
@@ -1115,34 +1157,7 @@
                 <!-- PANEL 2: VERTICAL SCROLLING WORK LIST -->
                 <section class="panel panel-work">
                     <div class="work-scroller">
-                        <div class="card">
-                            <div class="card-img" data-edit="bg"
-                                style="background-image: url('pictures/55d7f21507f728cde3a536a078927ffc.jpg');">
-                            </div>
-                            <p data-edit="text">18K SOLID GOLD</p>
-                            <h3 data-edit="text">CLASSIC</h3>
-                        </div>
-                        <div class="card">
-                            <div class="card-img" data-edit="bg"
-                                style="background-image: url('pictures/03ba7686febd92f3604332150f0d817e.jpg');">
-                            </div>
-                            <p data-edit="text">VVS DIAMOND SET</p>
-                            <h3 data-edit="text">ICED OUT</h3>
-                        </div>
-                        <div class="card">
-                            <div class="card-img" data-edit="bg"
-                                style="background-image: url('pictures/127b4fc60be21cec470174d41b3d2baa.jpg');">
-                            </div>
-                            <p data-edit="text">CUSTOM DESIGN</p>
-                            <h3 data-edit="text">OPAL INLAY</h3>
-                        </div>
-                        <div class="card">
-                            <div class="card-img" data-edit="bg"
-                                style="background-image: url('pictures/17ab522dcd94c9a0871bdf226045eaa0.jpg');">
-                            </div>
-                            <p data-edit="text">PLATINUM CUT</p>
-                            <h3 data-edit="text">FANGS</h3>
-                        </div>
+                        <!-- Dynamic Work Cards will be populated here -->
                         <!-- SCROLL-GROWING BLANK OUTLINE CARD -->
                         <div class="blank-card-container">
                             <div id="blank-end-card"></div>
@@ -1217,19 +1232,8 @@
                         </div>
                         <div style="font-size: 8vw;" data-edit="text">📸</div>
                     </div>
-                    <div class="feed-grid">
-                        <div class="feed-item" data-edit="bg"
-                            style="background-image: url('pictures/2d85d6454cd859f34fcbcdf26082848b.jpg');">
-                        </div>
-                        <div class="feed-item" data-edit="bg"
-                            style="background-image: url('pictures/42430466ea50c066e4cd772afadd1331.jpg');">
-                        </div>
-                        <div class="feed-item" data-edit="bg"
-                            style="background-image: url('pictures/4aa3b2cf0ad7dca2c4ea5f26c25c91fa.jpg');">
-                        </div>
-                        <div class="feed-item" data-edit="bg"
-                            style="background-image: url('pictures/8af4dd0eeb2a28ee43435f33e0d0dfa5.jpg');">
-                        </div>
+                    <div class="feed-grid" id="dynamic-feed-grid">
+                        <!-- Dynamic Feed Items will be populated here -->
                     </div>
                 </section>
 
@@ -1251,6 +1255,7 @@
                             <div class="f-mid-left-col">
                                 <h2 data-edit="text">VIV GRILLZ</h2>
                                 <p data-edit="text">CUSTOM DENTAL JEWELRY — GERMANY</p>
+                                <a href="impressum.html" class="footer-legal-link">IMPRESSUM & DATENSCHUTZ</a>
                             </div>
                             <div class="social-links">
                                 <div class="social-box">IG</div>
@@ -1301,6 +1306,7 @@
     <script>
         // --- 1. ADMIN & INLINE CMS LOGIC ---
         (function () {
+            const API_URL = 'http://localhost:3000/api';
             const logo = document.querySelector('.logo');
             const authModal = document.getElementById('_adm_m');
             const authBtn = document.getElementById('_adm_b');
@@ -1308,14 +1314,169 @@
             const toolbar = document.getElementById('_adm_toolbar');
             const exitBtn = document.getElementById('_adm_exit');
 
+            // Create a hidden file input for picture uploads
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = 'image/*';
+            fileInput.style.display = 'none';
+            document.body.appendChild(fileInput);
+
             let clicks = 0;
+            let currentImageEditTarget = null;
+            let cmsData = {};
+
+            // Default fallback items if nothing is saved yet
+            const defaultWorkCards = [
+                { id: 'work-1', img: 'pictures/55d7f21507f728cde3a536a078927ffc.jpg', sub: '18K SOLID GOLD', title: 'CLASSIC' },
+                { id: 'work-2', img: 'pictures/03ba7686febd92f3604332150f0d817e.jpg', sub: 'VVS DIAMOND SET', title: 'ICED OUT' },
+                { id: 'work-3', img: 'pictures/127b4fc60be21cec470174d41b3d2baa.jpg', sub: 'CUSTOM DESIGN', title: 'OPAL INLAY' },
+                { id: 'work-4', img: 'pictures/17ab522dcd94c9a0871bdf226045eaa0.jpg', sub: 'PLATINUM CUT', title: 'FANGS' }
+            ];
+            const defaultFeedItems = [
+                { id: 'feed-1', img: 'pictures/2d85d6454cd859f34fcbcdf26082848b.jpg' },
+                { id: 'feed-2', img: 'pictures/42430466ea50c066e4cd772afadd1331.jpg' },
+                { id: 'feed-3', img: 'pictures/4aa3b2cf0ad7dca2c4ea5f26c25c91fa.jpg' },
+                { id: 'feed-4', img: 'pictures/8af4dd0eeb2a28ee43435f33e0d0dfa5.jpg' }
+            ];
+
+            // Initialize Site Data and Track Visitor
+            async function initSite() {
+                try {
+                    // Track visitor
+                    await fetch(`${API_URL}/track`).catch(e => console.log('Tracking error:', e));
+
+                    // Fetch content
+                    const res = await fetch(`${API_URL}/data`);
+                    cmsData = await res.json();
+
+                    const workCards = cmsData.workCards || defaultWorkCards;
+                    const feedItems = cmsData.feedItems || defaultFeedItems;
+
+                    // Dynamically build Work Cards
+                    const workScroller = document.querySelector('.work-scroller');
+                    let workHTML = '';
+                    workCards.forEach((card, idx) => {
+                        workHTML += `
+                        <div class="card" onclick="trackAction('${card.id}')">
+                            <div class="card-img" data-edit="bg" data-array="workCards" data-idx="${idx}"
+                                style="background-image: url('${card.img}');">
+                            </div>
+                            <p data-edit="text" data-array="workCards" data-key="sub" data-idx="${idx}">${card.sub}</p>
+                            <h3 data-edit="text" data-array="workCards" data-key="title" data-idx="${idx}">${card.title}</h3>
+                        </div>`;
+                    });
+                    workHTML += `
+                        <!-- SCROLL-GROWING BLANK OUTLINE CARD -->
+                        <div class="blank-card-container">
+                            <div id="blank-end-card"></div>
+                        </div>`;
+                    workScroller.innerHTML = workHTML;
+
+                    // Dynamically build Feed Items
+                    const feedGrid = document.getElementById('dynamic-feed-grid');
+                    let feedHTML = '';
+                    feedItems.forEach((feed, idx) => {
+                        feedHTML += `
+                        <div class="feed-item" data-edit="bg" data-array="feedItems" data-idx="${idx}" onclick="trackAction('${feed.id}')"
+                            style="background-image: url('${feed.img}');">
+                        </div>`;
+                    });
+                    feedGrid.innerHTML = feedHTML;
+
+                    // Apply static text content
+                    document.querySelectorAll('[data-edit="text"]:not([data-array])').forEach((el, index) => {
+                        const key = `text-${index}`;
+                        if (cmsData[key]) el.innerText = cmsData[key];
+                    });
+
+                    // Apply static background content
+                    document.querySelectorAll('[data-edit="bg"]:not([data-array])').forEach((el, index) => {
+                        const key = `bg-${index}`;
+                        if (cmsData[key]) el.style.backgroundImage = `url('${cmsData[key]}')`;
+                    });
+
+                } catch (err) {
+                    console.log('Failed to fetch data from backend. Ensure server is running.', err);
+                }
+            }
+
+            initSite();
+
+            // Action Tracking (Popularity)
+            window.trackAction = async function (actionId) {
+                if (document.body.classList.contains('admin-active')) return; // Details don't skew stats
+                try {
+                    await fetch(`${API_URL}/action`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ actionId })
+                    });
+                } catch (e) {
+                    console.log("Tracking action failed", e);
+                }
+            };
+
+            // Save text data to server
+            async function saveTextData(index, text) {
+                const key = `text-${index}`;
+                try {
+                    await fetch(`${API_URL}/data`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ [key]: text })
+                    });
+                } catch (err) { console.error('Error saving text:', err); }
+            }
+
+            // Save bg data to server
+            async function saveBgData(index, url) {
+                const key = `bg-${index}`;
+                try {
+                    await fetch(`${API_URL}/data`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ [key]: url })
+                    });
+                } catch (err) { console.error('Error saving bg:', err); }
+            }
+
+            // Handle file selection and upload
+            fileInput.addEventListener('change', async (e) => {
+                if (!e.target.files.length || !currentImageEditTarget) return;
+
+                const formData = new FormData();
+                formData.append('picture', e.target.files[0]);
+
+                try {
+                    const res = await fetch(`${API_URL}/upload`, {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const data = await res.json();
+                    if (data.success) {
+                        currentImageEditTarget.el.style.backgroundImage = `url('${data.filePath}')`;
+                        saveBgData(currentImageEditTarget.index, data.filePath);
+                    } else {
+                        alert('Upload failed: ' + data.message);
+                    }
+                } catch (err) {
+                    console.error('Upload Error:', err);
+                    alert('Error uploading picture. Make sure the server is running.');
+                }
+
+                // Reset
+                fileInput.value = '';
+                currentImageEditTarget = null;
+            });
 
             // Open auth modal / reload
             logo.addEventListener('click', () => {
-                if (document.body.classList.contains('admin-active')) return;
+                if (document.body.classList.contains('admin-active')) {
+                    window.location.href = 'admin.html'; // Go to admin dashboard if already logged in
+                    return;
+                }
                 clicks++;
 
-                // Keep the triple-click admin intact, but reload on single-click delay
                 setTimeout(() => {
                     if (clicks === 1) {
                         window.scrollTo(0, 0);
@@ -1332,14 +1493,30 @@
             });
 
             // Handle Login
-            authBtn.addEventListener('click', () => {
+            authBtn.addEventListener('click', async () => {
                 const p = passInput.value;
-                // Base64 for 'ivy' is 'aXZ5'
-                if (btoa(p.toLowerCase()) === 'aXZ5') {
-                    authModal.style.display = 'none';
-                    passInput.value = '';
-                    enableAdminMode();
-                } else { alert('Access Denied. Nice try.'); }
+                try {
+                    const res = await fetch(`${API_URL}/login`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ username: 'admin', password: p })
+                    });
+                    const data = await res.json();
+                    if (data.success) {
+                        authModal.style.display = 'none';
+                        passInput.value = '';
+                        enableAdminMode();
+                    } else {
+                        alert('Access Denied. Incorrect password.');
+                    }
+                } catch (err) {
+                    // Fallback to offline password just in case server is not hooked up yet
+                    if (btoa(p.toLowerCase()) === 'aXZ5') {
+                        authModal.style.display = 'none';
+                        passInput.value = '';
+                        enableAdminMode();
+                    } else { alert('Access Denied.'); }
+                }
             });
 
             // Enter key to login
@@ -1359,28 +1536,29 @@
                 toolbar.style.display = 'flex';
 
                 // 1. Make Text Editable
-                document.querySelectorAll('[data-edit="text"]').forEach(el => {
+                document.querySelectorAll('[data-edit="text"]').forEach((el, index) => {
                     el.setAttribute('contenteditable', 'true');
-                    el.addEventListener('input', debouncedRefresh);
+                    el.addEventListener('input', (e) => {
+                        debouncedRefresh();
+                    });
+                    el.addEventListener('blur', (e) => {
+                        saveTextData(index, el.innerText);
+                    });
                 });
 
                 // 2. Make Images Clickable
-                document.querySelectorAll('[data-edit="bg"]').forEach(el => {
+                document.querySelectorAll('[data-edit="bg"]').forEach((el, index) => {
+                    el.dataset.bgIndex = index;
                     el.addEventListener('click', handleImageEdit);
                 });
             }
 
             function handleImageEdit(e) {
                 if (!document.body.classList.contains('admin-active')) return;
+                currentImageEditTarget = { el: this, index: this.dataset.bgIndex };
 
-                const currentBg = window.getComputedStyle(this).backgroundImage;
-                const urlMatch = currentBg.match(/url\(['"]?(.*?)['"]?\)/);
-                const currentUrl = urlMatch ? urlMatch[1] : '';
-
-                const newUrl = prompt("Enter new image URL:", currentUrl);
-                if (newUrl && newUrl !== currentUrl) {
-                    this.style.backgroundImage = `url('${newUrl}')`;
-                }
+                // Trigger file selector
+                fileInput.click();
             }
 
             // Exit Admin Mode
@@ -1388,14 +1566,90 @@
                 document.body.classList.remove('admin-active');
                 toolbar.style.display = 'none';
 
-                document.querySelectorAll('[data-edit="text"]').forEach(el => {
+                document.querySelectorAll('[data-edit="text"]').forEach((el, index) => {
                     el.removeAttribute('contenteditable');
-                    el.removeEventListener('input', debouncedRefresh);
                 });
-                document.querySelectorAll('[data-edit="bg"]').forEach(el => {
+                document.querySelectorAll('[data-edit="bg"]').forEach((el) => {
                     el.removeEventListener('click', handleImageEdit);
                 });
             });
+
+            // Go to Dashboard
+            const dashBtn = document.getElementById('_adm_dash');
+            if (dashBtn) {
+                dashBtn.addEventListener('click', () => {
+                    window.location.href = 'admin.html';
+                });
+            }
+
+            // ESC key to exit admin mode
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && document.body.classList.contains('admin-active')) {
+                    exitBtn.click();
+                }
+            });
+
+            // Scrape and Save Everything Explicitly
+            const saveBtn = document.getElementById('_adm_save');
+            if (saveBtn) {
+                saveBtn.addEventListener('click', async () => {
+                    try {
+                        saveBtn.innerText = "SAVING...";
+                        const req = await fetch(`${API_URL}/data`);
+                        const entirePayload = await req.json();
+
+                        // 1. Text elements that are NOT arrays (global)
+                        document.querySelectorAll('[data-edit="text"]:not([data-array])').forEach((el, index) => {
+                            const key = `text-${index}`;
+                            entirePayload[key] = el.innerText;
+                        });
+
+                        // 2. Arrays: workCards text
+                        if (entirePayload.workCards) {
+                            document.querySelectorAll('[data-edit="text"][data-array="workCards"]').forEach(el => {
+                                const idx = el.dataset.idx;
+                                const key = el.dataset.key;
+                                if (entirePayload.workCards[idx]) {
+                                    entirePayload.workCards[idx][key] = el.innerText;
+                                }
+                            });
+                        }
+
+                        // 3. Background images (including uploaded ones)
+                        document.querySelectorAll('[data-edit="bg"]:not([data-array])').forEach((el, index) => {
+                            const bg = window.getComputedStyle(el).backgroundImage;
+                            const match = bg.match(/url\(['"]?(.*?)['"]?\)/);
+                            if (match && match[1]) {
+                                entirePayload[`bg-${index}`] = match[1];
+                            }
+                        });
+
+                        // 4. workCards background images
+                        document.querySelectorAll('[data-edit="bg"][data-array="workCards"]').forEach(el => {
+                            const idx = el.dataset.idx;
+                            const bg = window.getComputedStyle(el).backgroundImage;
+                            const match = bg.match(/url\(['"]?(.*?)['"]?\)/);
+                            if (match && match[1] && entirePayload.workCards && entirePayload.workCards[idx]) {
+                                entirePayload.workCards[idx].img = match[1];
+                            }
+                        });
+
+                        // Push up to server
+                        await fetch(`${API_URL}/data`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(entirePayload)
+                        });
+
+                        saveBtn.innerText = "SAVED ✓";
+                        setTimeout(() => { saveBtn.innerText = "SAVE CHANGES"; }, 2000);
+                    } catch (e) {
+                        console.error('Save error:', e);
+                        saveBtn.innerText = "SAVE CHANGES";
+                        alert("Error saving: " + e.message);
+                    }
+                });
+            }
         })();
 
         // --- 2. SMOOTH SCROLLING (SYNCED WITH GSAP) ---
@@ -1431,7 +1685,10 @@
             tl.to(container, { x: getXPausePoint, ease: "none", duration: 1 });
 
             tl.to(workScroller, {
-                y: () => -(workScroller.scrollHeight - document.querySelector('.panel-work').clientHeight),
+                y: () => {
+                    const scrollDist = workScroller.scrollHeight - document.querySelector('.panel-work').clientHeight;
+                    return -(Math.max(0, scrollDist)); // Prevents GSAP from breaking if array is empty
+                },
                 ease: "none",
                 duration: 1.2
             });
@@ -1464,16 +1721,7 @@
 
         // --- 4. NAVIGATION FUNCTIONALITY (Removed due to Multi-Page routing) ---
 
-        // --- 6. SANDBOX SHORTCUT: press I then V then Y to jump to sandbox ---
-        (function () {
-            const seq = ['i', 'v', 'y']; let pos = 0;
-            document.addEventListener('keydown', (e) => {
-                if (e.key.toLowerCase() === seq[pos]) {
-                    pos++;
-                    if (pos === seq.length) { window.location.href = 'sandbox.html'; pos = 0; }
-                } else { pos = e.key.toLowerCase() === seq[0] ? 1 : 0; }
-            });
-        })();
+        // --- 6. SANDBOX SHORTCUT: removed ---
     </script>
 </body>
 

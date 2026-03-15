@@ -316,6 +316,26 @@
             border: 2px solid var(--cream);
         }
 
+        #_adm_exit,
+        #_adm_dash {
+            background: var(--dark-bg);
+            color: var(--accent);
+            border: none;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-family: 'Inter';
+            font-weight: 800;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        #_adm_exit:hover,
+        #_adm_dash:hover {
+            background: white;
+            color: var(--dark-bg);
+        }
+
         #_adm_exit {
             background: var(--dark-bg);
             color: var(--accent);
@@ -566,84 +586,18 @@
     <!-- FLOATING ACTIVE ADMIN TOOLBAR -->
     <div id="_adm_toolbar">
         <span>ADMIN MODE ACTIVE</span>
+        <button id="_adm_save"
+            style="background:white; color:#1a1a1a; border:none; padding:5px 15px; border-radius:20px; font-family:'Inter'; font-weight:800; font-size:12px; cursor:pointer;">SAVE
+            CHANGES</button>
+        <button id="_adm_dash">DASHBOARD</button>
         <button id="_adm_exit">EXIT ADMIN</button>
     </div>
 
     <div class="page-content">
         <h1 class="page-title" data-edit="text">WORK-WORK-WORK-</h1>
 
-        <div class="work-grid">
-            <div class="work-card">
-                <div class="work-img-container">
-                    <div class="work-img" data-edit="bg"
-                        style="background-image: url('pictures/55d7f21507f728cde3a536a078927ffc.jpg');">
-                    </div>
-                </div>
-                <div class="work-meta">
-                    <span class="work-client" data-edit="text">18K SOLID GOLD</span>
-                    <h3 class="work-title" data-edit="text">CLASSIC</h3>
-                </div>
-            </div>
-
-            <div class="work-card">
-                <div class="work-img-container">
-                    <div class="work-img" data-edit="bg"
-                        style="background-image: url('pictures/03ba7686febd92f3604332150f0d817e.jpg');">
-                    </div>
-                </div>
-                <div class="work-meta">
-                    <span class="work-client" data-edit="text">VVS DIAMOND SET</span>
-                    <h3 class="work-title" data-edit="text">ICED OUT</h3>
-                </div>
-            </div>
-
-            <div class="work-card">
-                <div class="work-img-container">
-                    <div class="work-img" data-edit="bg"
-                        style="background-image: url('pictures/127b4fc60be21cec470174d41b3d2baa.jpg');">
-                    </div>
-                </div>
-                <div class="work-meta">
-                    <span class="work-client" data-edit="text">CUSTOM DESIGN</span>
-                    <h3 class="work-title" data-edit="text">OPAL INLAY</h3>
-                </div>
-            </div>
-
-            <div class="work-card">
-                <div class="work-img-container">
-                    <div class="work-img" data-edit="bg"
-                        style="background-image: url('pictures/17ab522dcd94c9a0871bdf226045eaa0.jpg');">
-                    </div>
-                </div>
-                <div class="work-meta">
-                    <span class="work-client" data-edit="text">PLATINUM CUT</span>
-                    <h3 class="work-title" data-edit="text">FANGS</h3>
-                </div>
-            </div>
-
-            <div class="work-card">
-                <div class="work-img-container">
-                    <div class="work-img" data-edit="bg"
-                        style="background-image: url('pictures/441d751ec6656340d49b4e07ade92a0b.jpg');">
-                    </div>
-                </div>
-                <div class="work-meta">
-                    <span class="work-client" data-edit="text">FULL ARCH</span>
-                    <h3 class="work-title" data-edit="text">ROSE GOLD</h3>
-                </div>
-            </div>
-
-            <div class="work-card">
-                <div class="work-img-container">
-                    <div class="work-img" data-edit="bg"
-                        style="background-image: url('pictures/94a30832dee71af65360628cf4db6db6.jpg');">
-                    </div>
-                </div>
-                <div class="work-meta">
-                    <span class="work-client" data-edit="text">SINGLE CAP</span>
-                    <h3 class="work-title" data-edit="text">STARBURST</h3>
-                </div>
-            </div>
+        <div class="work-grid" id="dynamic-work-grid">
+            <!-- Dynamic Work Cards will be populated here by Javascript -->
         </div>
 
 
@@ -687,6 +641,12 @@
                     <div class="staff-row"><span data-edit="text">INFO@IVYSGRILLZ.COM</span><span
                             data-edit="text">555.987.6543</span></div>
                 </div>
+                <div
+                    style="text-align: center; padding: 2vw 0 1vw; opacity: 0.4; font-size: 11px; letter-spacing: 1px;">
+                    <a href="impressum.html"
+                        style="color: var(--cream); text-decoration: none; font-family: 'Inter', sans-serif;">IMPRESSUM
+                        & DATENSCHUTZ</a>
+                </div>
             </div>
         </section>
     </div>
@@ -697,6 +657,77 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
     <script>
+        const API_URL = 'http://localhost:3000/api';
+        let cmsData = {};
+
+        // Default fallback items if nothing is saved yet
+        const defaultGalleryCards = [
+            { id: 'gallery-1', img: 'pictures/55d7f21507f728cde3a536a078927ffc.jpg', sub: '18K SOLID GOLD', title: 'CLASSIC' },
+            { id: 'gallery-2', img: 'pictures/03ba7686febd92f3604332150f0d817e.jpg', sub: 'VVS DIAMOND SET', title: 'ICED OUT' },
+            { id: 'gallery-3', img: 'pictures/127b4fc60be21cec470174d41b3d2baa.jpg', sub: 'CUSTOM DESIGN', title: 'OPAL INLAY' },
+            { id: 'gallery-4', img: 'pictures/17ab522dcd94c9a0871bdf226045eaa0.jpg', sub: 'PLATINUM CUT', title: 'FANGS' },
+            { id: 'gallery-5', img: 'pictures/441d751ec6656340d49b4e07ade92a0b.jpg', sub: 'FULL ARCH', title: 'ROSE GOLD' },
+            { id: 'gallery-6', img: 'pictures/94a30832dee71af65360628cf4db6db6.jpg', sub: 'SINGLE CAP', title: 'STARBURST' }
+        ];
+
+        async function initSite() {
+            try {
+                // Fetch content
+                const res = await fetch(`${API_URL}/data`);
+                cmsData = await res.json();
+
+                const galleryCards = cmsData.galleryCards || defaultGalleryCards;
+
+                // Dynamically build Work Cards
+                const workGrid = document.getElementById('dynamic-work-grid');
+                let workHTML = '';
+                galleryCards.forEach((card, idx) => {
+                    workHTML += `
+                    <div class="work-card" onclick="trackAction('${card.id}')">
+                        <div class="work-img-container">
+                            <div class="work-img" data-edit="bg" data-array="galleryCards" data-idx="${idx}"
+                                style="background-image: url('${card.img}');">
+                            </div>
+                        </div>
+                        <div class="work-meta">
+                            <span class="work-client" data-edit="text" data-array="galleryCards" data-key="sub" data-idx="${idx}">${card.sub}</span>
+                            <h3 class="work-title" data-edit="text" data-array="galleryCards" data-key="title" data-idx="${idx}">${card.title}</h3>
+                        </div>
+                    </div>`;
+                });
+                workGrid.innerHTML = workHTML;
+
+                // Apply static text content
+                document.querySelectorAll('[data-edit="text"]:not([data-array])').forEach((el, index) => {
+                    const key = `work-text-${index}`;
+                    if (cmsData[key]) el.innerText = cmsData[key];
+                });
+
+                // Triggers GSAP animations for the new elements
+                gsap.from(".work-card", { y: 100, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power2.out", delay: 0.4 });
+                ScrollTrigger.refresh();
+
+            } catch (err) {
+                console.log('Failed to fetch data from backend. Ensure server is running.', err);
+            }
+        }
+
+        initSite();
+
+        // Action Tracking (Popularity)
+        window.trackAction = async function (actionId) {
+            if (document.body.classList.contains('admin-active')) return;
+            try {
+                await fetch(`${API_URL}/action`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ actionId })
+                });
+            } catch (e) {
+                console.log("Tracking action failed", e);
+            }
+        };
+
         // --- 1. ADMIN & INLINE CMS LOGIC ---
         (function () {
             const logo = document.querySelector('.logo');
@@ -706,7 +737,15 @@
             const toolbar = document.getElementById('_adm_toolbar');
             const exitBtn = document.getElementById('_adm_exit');
 
+            // Create a hidden file input for picture uploads
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = 'image/*';
+            fileInput.style.display = 'none';
+            document.body.appendChild(fileInput);
+
             let clicks = 0;
+            let currentImageEditTarget = null;
 
             // Open auth modal / reload
             logo.addEventListener('click', () => {
@@ -748,7 +787,24 @@
             let refreshTimeout;
             const debouncedRefresh = () => {
                 clearTimeout(refreshTimeout);
-                refreshTimeout = setTimeout(() => ScrollTrigger.refresh(), 500);
+                // Force a manual GSAP refresh 
+                setTimeout(() => {
+                    ScrollTrigger.refresh();
+
+                    // Re-apply animations manually if they were missed during the fetch
+                    const freshItems = document.querySelectorAll('.work-card');
+                    if (freshItems.length > 0) {
+                        freshItems.forEach((item) => {
+                            gsap.fromTo(item,
+                                { y: 100, opacity: 0, scale: 0.95 },
+                                {
+                                    y: 0, opacity: 1, scale: 1, duration: 1, ease: "power3.out",
+                                    scrollTrigger: { trigger: item, start: "top 85%", end: "top 50%", scrub: 1 }
+                                }
+                            );
+                        });
+                    }
+                }, 500);
             };
 
             function enableAdminMode() {
@@ -762,22 +818,52 @@
                 });
 
                 // 2. Make Images Clickable
-                document.querySelectorAll('[data-edit="bg"]').forEach(el => {
+                document.querySelectorAll('[data-edit="bg"]').forEach((el, index) => {
+                    el.dataset.bgIndex = index;
                     el.addEventListener('click', handleImageEdit);
                 });
             }
 
             function handleImageEdit(e) {
                 if (!document.body.classList.contains('admin-active')) return;
+                currentImageEditTarget = { el: this, index: this.dataset.bgIndex };
+                fileInput.click();
+            }
 
-                const currentBg = window.getComputedStyle(this).backgroundImage;
-                const urlMatch = currentBg.match(/url\(['"]?(.*?)['"]?\)/);
-                const currentUrl = urlMatch ? urlMatch[1] : '';
+            // Handle file selection and upload
+            fileInput.addEventListener('change', async (e) => {
+                if (!e.target.files.length || !currentImageEditTarget) return;
 
-                const newUrl = prompt("Enter new image URL:", currentUrl);
-                if (newUrl && newUrl !== currentUrl) {
-                    this.style.backgroundImage = `url('${newUrl}')`;
+                const formData = new FormData();
+                formData.append('picture', e.target.files[0]);
+
+                try {
+                    const res = await fetch(`${API_URL}/upload`, {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const data = await res.json();
+                    if (data.success) {
+                        currentImageEditTarget.el.style.backgroundImage = `url('${data.filePath}')`;
+                    } else {
+                        alert('Upload failed: ' + data.message);
+                    }
+                } catch (err) {
+                    console.error('Upload Error:', err);
+                    alert('Error uploading picture. Make sure the server is running.');
                 }
+
+                // Reset
+                fileInput.value = '';
+                currentImageEditTarget = null;
+            });
+
+            // Go to Dashboard
+            const dashBtn = document.getElementById('_adm_dash');
+            if (dashBtn) {
+                dashBtn.addEventListener('click', () => {
+                    window.location.href = 'admin.html';
+                });
             }
 
             // Exit Admin Mode
@@ -793,18 +879,89 @@
                     el.removeEventListener('click', handleImageEdit);
                 });
             });
+
+            // ESC key to exit admin mode
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && document.body.classList.contains('admin-active')) {
+                    exitBtn.click();
+                }
+            });
+
+            // Scrape and Save Everything Explicitly
+            const saveBtn = document.getElementById('_adm_save');
+            if (saveBtn) {
+                saveBtn.addEventListener('click', async () => {
+                    try {
+                        saveBtn.innerText = "SAVING...";
+                        const req = await fetch(`${API_URL}/data`);
+                        const entirePayload = await req.json();
+
+                        // 1. Text elements that are NOT arrays (global)
+                        document.querySelectorAll('[data-edit="text"]:not([data-array])').forEach((el, index) => {
+                            const key = `text-${index}`;
+                            entirePayload[key] = el.innerText;
+                        });
+
+                        // 2. Arrays: galleryCards text
+                        if (entirePayload.galleryCards) {
+                            document.querySelectorAll('[data-edit="text"][data-array="galleryCards"]').forEach(el => {
+                                const idx = el.dataset.idx;
+                                const key = el.dataset.key;
+                                if (entirePayload.galleryCards[idx]) {
+                                    entirePayload.galleryCards[idx][key] = el.innerText;
+                                }
+                            });
+                        }
+
+                        // 3. Background images
+                        document.querySelectorAll('[data-edit="bg"]:not([data-array])').forEach((el, index) => {
+                            const bg = window.getComputedStyle(el).backgroundImage;
+                            const match = bg.match(/url\(['"]?(.*?)['"]?\)/);
+                            if (match && match[1]) {
+                                entirePayload[`bg-${index}`] = match[1];
+                            }
+                        });
+
+                        // Push up to server
+                        await fetch(`${API_URL}/data`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(entirePayload)
+                        });
+
+                        saveBtn.innerText = "SAVED ✓";
+                        setTimeout(() => { saveBtn.innerText = "SAVE CHANGES"; }, 2000);
+                    } catch (e) {
+                        console.error('Save error:', e);
+                        saveBtn.innerText = "SAVE CHANGES";
+                        alert("Error saving: " + e.message);
+                    }
+                });
+            }
         })();
 
         // --- 2. SMOOTH SCROLLING (SYNCED WITH GSAP) ---
-        const lenis = new Lenis({ duration: 0.8 });
+        // Initialize Lenis
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // GSAP ScrollTrigger integration
+        gsap.registerPlugin(ScrollTrigger);
         lenis.on('scroll', ScrollTrigger.update);
         gsap.ticker.add((time) => lenis.raf(time * 1000));
         gsap.ticker.lagSmoothing(0);
 
         // --- 3. PAGE ANIMATIONS ---
-        gsap.registerPlugin(ScrollTrigger);
         gsap.from(".page-title", { y: 50, opacity: 0, duration: 1, ease: "back.out(1.2)", delay: 0.2 });
-        gsap.from(".work-card", { y: 100, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power2.out", delay: 0.4 });
+        // work-card animation moved to initSite() so it plays after they load into DOM
 
         // Expand View All Card
         gsap.to(".view-all-card", {
@@ -817,6 +974,34 @@
             width: "95vw",
             ease: "none"
         });
+
+        // Animate grid items on scroll
+        const gridItems = document.querySelectorAll('.work-card');
+        if (gridItems.length > 0) {
+            gridItems.forEach((item, index) => {
+                gsap.fromTo(item,
+                    {
+                        y: 100,
+                        opacity: 0,
+                        scale: 0.95
+                    },
+                    {
+                        y: 0,
+                        opacity: 1,
+                        scale: 1,
+                        duration: 1,
+                        ease: "power3.out",
+                        scrollTrigger: {
+                            trigger: item,
+                            start: "top 85%",
+                            end: "top 50%",
+                            scrub: 1,
+                            toggleActions: "play none none reverse"
+                        }
+                    }
+                );
+            });
+        }
 
         // Parallax scroll text
         gsap.to(".view-all-text", {

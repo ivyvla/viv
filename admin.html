@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Ivy's Grillz</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Shrikhand&family=Inter:wght@400;600;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --cream: #DAD7CD;
+            --dark-bg: #222426;
+            --accent: #588157;
+            --accent-light: #A3B18A;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--cream);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .header {
+            padding: 40px;
+            text-align: center;
+            border-bottom: 2px solid var(--cream);
+        }
+
+        h1 {
+            font-family: 'Shrikhand';
+            color: var(--accent);
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            color: var(--cream);
+            border: 2px solid var(--cream);
+            padding: 10px 20px;
+            font-family: 'Archivo Black';
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .tab-btn:hover,
+        .tab-btn.active {
+            background: var(--accent);
+            color: var(--dark-bg);
+            border-color: var(--accent);
+        }
+
+        .dashboard-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* --- CARDS & GRIDS --- */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--cream);
+            color: var(--dark-bg);
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            border: 4px solid var(--accent);
+        }
+
+        .card h2 {
+            font-family: 'Archivo Black';
+            margin-bottom: 10px;
+        }
+
+        .stat {
+            font-family: 'Shrikhand';
+            font-size: 4rem;
+            color: var(--accent);
+            margin: 10px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--dark-bg);
+            color: var(--cream);
+            padding: 15px 30px;
+            font-family: 'Inter';
+            font-weight: 800;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 20px;
+            transition: background 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn:hover {
+            background: var(--accent);
+        }
+
+        /* --- LISTS & TABLES --- */
+        ul.styled-list {
+            list-style: none;
+            text-align: left;
+            max-height: 250px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        ul.styled-list li {
+            padding: 10px;
+            border-bottom: 1px solid var(--dark-bg);
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+        }
+
+        ul.styled-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* --- MESSAGES UI --- */
+        .message-box {
+            background: #fff;
+            color: var(--dark-bg);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 5px solid var(--accent);
+            text-align: left;
+        }
+
+        .message-box .meta {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .message-box p {
+            font-size: 1.1em;
+            line-height: 1.5;
+        }
+
+        /* --- GALLERY MANAGER --- */
+        .form-group {
+            text-align: left;
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 800;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: 'Inter';
+        }
+
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .preview-item {
+            position: relative;
+            background: #ddd;
+            height: 150px;
+            border-radius: 4px;
+            background-size: cover;
+            background-position: center;
+            border: 2px solid var(--dark-bg);
+        }
+        .preview-item .delete-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .preview-item p {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            margin: 0;
+            padding: 5px;
+            font-size: 0.8em;
+            text-align: center;
+        }
+        
+        /* Drag and Drop visually */
+        .preview-item.dragging {
+            opacity: 0.5;
+            border: 2px dashed var(--accent);
+        }
+        .preview-item.over {
+            border: 2px solid var(--cream);
+            transform: scale(1.05);
+        }
+
+        /* --- AUTH OVERLAY --- */
+        #login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: var(--dark-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 100;
+        }
+
+        #login-overlay input {
+            padding: 15px;
+            font-size: 18px;
+            border: none;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            width: 300px;
+            text-align: center;
+        }
+
+        #login-overlay button {
+            padding: 15px 30px;
+            background: var(--accent);
+            color: var(--dark-bg);
+            border: none;
+            font-family: 'Shrikhand';
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="login-overlay">
+        <h1 style="color: var(--accent); text-shadow: unset;">ADMIN LOGIN</h1>
+        <input type="password" id="passInput" placeholder="Passcode (hint: ivy)" autocomplete="off">
+        <button id="loginBtn">AUTHORIZE</button>
+    </div>
+
+    <div class="header">
+        <h1>ADMIN DASHBOARD</h1>
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('overview')">Overview</button>
+            <button class="tab-btn" onclick="switchTab('inbox')">Inbox</button>
+            <button class="tab-btn" onclick="switchTab('gallery')">Gallery Manager</button>
+            <a href="index.html" class="tab-btn" style="text-decoration:none; background:var(--accent); color:var(--dark-bg);">Live Site →</a>
+        </div>
+    </div>
+
+    <div class="dashboard-container">
+        
+        <!-- OVERVIEW TAB -->
+        <div id="overview" class="tab-content active">
+            <div class="grid-2">
+                <div class="card">
+                    <h2>TOTAL VISITS</h2>
+                    <div class="stat" id="totalVisits">0</div>
+                    <p>Total page loads registered.</p>
+                </div>
+                <div class="card">
+                    <h2>UNIQUE VISITORS</h2>
+                    <div class="stat" id="uniqueVisitors">0</div>
+                    <p>Based on unique IP addresses.</p>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h2>VISITOR GEOGRAPHY</h2>
+                    <ul class="styled-list" id="geoList">
+                        <li>Loading locations...</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h2>POPULAR ITEMS</h2>
+                    <p style="margin-bottom:10px;">Most clicked gallery/feed items.</p>
+                    <ul class="styled-list" id="popularList">
+                        <li>Loading interactions...</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>DAILY BREAKDOWN</h2>
+                <ul class="styled-list" id="dailyList" style="max-height: 150px;"></ul>
+            </div>
+        </div>
+
+        <!-- INBOX TAB -->
+        <div id="inbox" class="tab-content">
+            <h2 style="font-family:'Archivo Black'; margin-bottom: 10px;">CONTACT FORM MESSAGES</h2>
+            <div id="messagesContainer">
+                <p>Loading messages...</p>
+            </div>
+        </div>
+
+        <!-- GALLERY MANAGER TAB -->
+        <div id="gallery" class="tab-content">
+            
+            <!-- SECTION 1: HOMEPAGE GALLERY -->
+            <div class="card" style="text-align: left; border-color: #A3B18A;">
+                <h2>HOMEPAGE SCROLLER</h2>
+                <p style="margin-bottom: 20px;">Manage the horizontal scrolling cards on the main index page.</p>
+                
+                <div class="form-group">
+                    <label>Image URL (or path after upload)</label>
+                    <input type="text" id="newWorkImg" placeholder="e.g., pictures/uploads/123.jpg">
+                </div>
+                <div class="form-group">
+                    <label>Subtitle (e.g., '18K SOLID GOLD')</label>
+                    <input type="text" id="newWorkSub">
+                </div>
+                <div class="form-group">
+                    <label>Title (e.g., 'CLASSIC')</label>
+                    <input type="text" id="newWorkTitle">
+                </div>
+                <button class="btn" onclick="addNewCard('work')">ADD TO HOMEPAGE</button>
+                
+                <div class="preview-grid" id="workPreviewGrid" style="margin-top: 20px;">
+                    <!-- Dynamic Previews (sortable) -->
+                </div>
+            </div>
+
+            <!-- SECTION 2: DEDICATED GALLERY PAGE -->
+            <div class="card" style="text-align: left; border-color: #588157; margin-top: 20px;">
+                <h2>DEDICATED GALLERY PAGE</h2>
+                <p style="margin-bottom: 20px;">Manage the full vertical gallery on the work.html subpage.</p>
+                
+                <div class="form-group">
+                    <label>Image URL (or path after upload)</label>
+                    <input type="text" id="newGalleryImg" placeholder="e.g., pictures/uploads/123.jpg">
+                </div>
+                <div class="form-group">
+                    <label>Subtitle (e.g., '18K SOLID GOLD')</label>
+                    <input type="text" id="newGallerySub">
+                </div>
+                <div class="form-group">
+                    <label>Title (e.g., 'CLASSIC')</label>
+                    <input type="text" id="newGalleryTitle">
+                </div>
+                <button class="btn" onclick="addNewCard('gallery')">ADD TO GALLERY</button>
+
+                <div class="preview-grid" id="galleryPreviewGrid" style="margin-top: 20px;">
+                    <!-- Dynamic Previews (sortable) -->
+                </div>
+            </div>
+
+            <!-- GLOBAL SAVE BUTTONS -->
+            <div class="card" style="text-align: left; margin-top:20px;">
+                <h2>SAVE CHANGES</h2>
+                <p>Refresh your live site pages after saving to see changes.</p>
+                <div style="margin-top: 20px; display: flex; gap: 10px;">
+                    <button class="btn" style="background:#cc0000; color:white;" onclick="saveGalleryChanges()">SAVE ALL IMAGES TO SERVER</button>
+                    <button class="btn" style="background:transparent; border:2px solid #cc0000; color:#cc0000;" onclick="resetGallery()">RESET TO DEFAULT</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3000/api';
+        let fullData = {};
+
+        // --- AUTH LOGIC ---
+        const loginOverlay = document.getElementById('login-overlay');
+        const loginBtn = document.getElementById('loginBtn');
+        const passInput = document.getElementById('passInput');
+
+        loginBtn.addEventListener('click', async () => {
+            const p = passInput.value;
+            try {
+                const res = await fetch(`${API_URL}/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: 'admin', password: p })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    loginOverlay.style.display = 'none';
+                    initDashboard();
+                } else {
+                    alert('Incorrect passcode.');
+                }
+            } catch (err) {
+                if (btoa(p.toLowerCase()) === 'aXZ5') {
+                    loginOverlay.style.display = 'none';
+                    alert("WARNING: Server disconnected. Stats won't load.");
+                } else { alert('Incorrect'); }
+            }
+        });
+
+        passInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') loginBtn.click();
+        });
+
+        // --- TAB LOGIC ---
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // --- FETCH DATA ---
+        async function initDashboard() {
+            fetchStats();
+            fetchMessages();
+            fetchGalleryData();
+        }
+
+        async function fetchStats() {
+            try {
+                const res = await fetch(`${API_URL}/stats`);
+                const stats = await res.json();
+
+                // Overview
+                document.getElementById('totalVisits').innerText = stats.totalVisits || 0;
+                document.getElementById('uniqueVisitors').innerText = stats.uniqueVisitors || 0;
+
+                // Daily
+                const dailyList = document.getElementById('dailyList');
+                dailyList.innerHTML = '';
+                if (stats.dailyVisits) {
+                    Object.keys(stats.dailyVisits).reverse().forEach(date => {
+                        dailyList.innerHTML += `<li><span>${date}</span> <span>${stats.dailyVisits[date]} views</span></li>`;
+                    });
+                }
+
+                // Geography
+                const geoList = document.getElementById('geoList');
+                geoList.innerHTML = '';
+                if (stats.locations && Object.keys(stats.locations).length > 0) {
+                    Object.entries(stats.locations)
+                        .sort((a,b) => b[1] - a[1]) // Sort highest first
+                        .forEach(([loc, count]) => {
+                            geoList.innerHTML += `<li><span>${loc}</span> <span>${count} visitors</span></li>`;
+                        });
+                } else {
+                    geoList.innerHTML = '<li>No geographic data yet.</li>';
+                }
+
+                // Popularity
+                const popList = document.getElementById('popularList');
+                popList.innerHTML = '';
+                if (stats.popularItems && Object.keys(stats.popularItems).length > 0) {
+                    Object.entries(stats.popularItems)
+                        .sort((a,b) => b[1] - a[1])
+                        .forEach(([item, count]) => {
+                            popList.innerHTML += `<li><span>ID: ${item}</span> <span style="color:var(--dark-bg); background:var(--accent); padding:2px 8px; border-radius:10px;">${count} clicks</span></li>`;
+                        });
+                } else {
+                    popList.innerHTML = '<li>No click data yet.</li>';
+                }
+
+            } catch (err) {
+                console.error("Failed to fetch stats", err);
+            }
+        }
+
+        async function fetchMessages() {
+            try {
+                const res = await fetch(`${API_URL}/messages`);
+                const messages = await res.json();
+                const container = document.getElementById('messagesContainer');
+                
+                if (!messages || messages.length === 0) {
+                    container.innerHTML = '<p>Your inbox is empty.</p>';
+                    return;
+                }
+
+                container.innerHTML = '';
+                // Show newest first
+                messages.reverse().forEach(msg => {
+                    const date = new Date(msg.date).toLocaleString();
+                    container.innerHTML += `
+                        <div class="message-box">
+                            <div class="meta">
+                                <strong>${msg.name} (${msg.email})</strong>
+                                <span>${date}</span>
+                            </div>
+                            <p>${msg.message}</p>
+                        </div>
+                    `;
+                });
+            } catch (err) {
+                console.error("Failed to fetch messages", err);
+            }
+        }
+
+        async function fetchGalleryData() {
+            try {
+                const res = await fetch(`${API_URL}/data`);
+                let fetchedData = await res.json();
+                
+                // Merge data to fullData globally
+                fullData = { ...fullData, ...fetchedData };
+                
+                // Initialize fallback arrays if missing or destroyed by the user
+                const defaultWorkCards = [
+                    { id: 'work-1', img: 'pictures/55d7f21507f728cde3a536a078927ffc.jpg', sub: '18K SOLID GOLD', title: 'CLASSIC' },
+                    { id: 'work-2', img: 'pictures/03ba7686febd92f3604332150f0d817e.jpg', sub: 'VVS DIAMOND SET', title: 'ICED OUT' },
+                    { id: 'work-3', img: 'pictures/127b4fc60be21cec470174d41b3d2baa.jpg', sub: 'CUSTOM DESIGN', title: 'OPAL INLAY' },
+                    { id: 'work-4', img: 'pictures/17ab522dcd94c9a0871bdf226045eaa0.jpg', sub: 'PLATINUM CUT', title: 'FANGS' }
+                ];
+                
+                const defaultGalleryCards = [ ...defaultWorkCards,
+                    { id: 'gallery-5', img: 'pictures/441d751ec6656340d49b4e07ade92a0b.jpg', sub: 'FULL ARCH', title: 'ROSE GOLD' },
+                    { id: 'gallery-6', img: 'pictures/94a30832dee71af65360628cf4db6db6.jpg', sub: 'SINGLE CAP', title: 'STARBURST' }
+                ];
+
+                if (!fullData.workCards || !Array.isArray(fullData.workCards) || fullData.workCards.length === 0) {
+                    fullData.workCards = [...defaultWorkCards]; // Main index page arrays
+                }
+                
+                if (!fullData.galleryCards || !Array.isArray(fullData.galleryCards) || fullData.galleryCards.length === 0) {
+                    fullData.galleryCards = [...defaultGalleryCards]; // Work.html gallery arrays
+                }
+                
+                // Force a save to the server to establish baseline if either wasn't there
+                if (!fetchedData.workCards || !fetchedData.galleryCards) {
+                     fetch(`${API_URL}/data`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(fullData)
+                     });
+                }
+                
+                renderGalleryPreviews('work');
+                renderGalleryPreviews('gallery');
+            } catch (err) {
+                console.error("Failed to fetch gallery data", err);
+            }
+        }
+
+        let dragStartIndex;
+        let dragTargetType; // 'work' or 'gallery'
+
+        function renderGalleryPreviews(type) {
+            const gridId = type === 'work' ? 'workPreviewGrid' : 'galleryPreviewGrid';
+            const dataArray = type === 'work' ? fullData.workCards : fullData.galleryCards;
+            const grid = document.getElementById(gridId);
+            grid.innerHTML = '';
+            
+            dataArray.forEach((card, idx) => {
+                const div = document.createElement('div');
+                div.className = 'preview-item';
+                div.style.backgroundImage = `url('${card.img || ''}')`;
+                div.setAttribute('draggable', 'true');
+                div.setAttribute('data-index', idx);
+                div.setAttribute('data-type', type);
+                
+                div.innerHTML = `
+                    <div class="card-controls" style="position:absolute; top:5px; right:5px; display:flex; gap:5px; z-index:10;">
+                        <button class="edit-btn" onclick="toggleEditCard('${type}', ${idx}, event)" style="background:#588157; color:white; border:none; border-radius:3px; padding:2px 6px; cursor:pointer;">✎</button>
+                        <button class="delete-btn" onclick="removeCard('${type}', ${idx}, event)" style="background:#cc0000; color:white; border:none; border-radius:3px; padding:2px 6px; cursor:pointer;">X</button>
+                    </div>
+                    
+                    <div class="card-view">
+                        <p style="background:rgba(0,0,0,0.6); color:white; padding:2px 5px; border-radius:3px; display:inline-block;">${card.title || 'Untitled'}</p>
+                    </div>
+                    
+                    <div class="card-edit" style="display:none; flex-direction:column; gap:5px; padding:10px; background:rgba(0,0,0,0.8); height:100%; box-sizing:border-box;">
+                        <input type="text" id="edit-${type}-${idx}-img" value="${card.img || ''}" placeholder="Image URL" style="font-size:10px; padding:2px;">
+                        <input type="text" id="edit-${type}-${idx}-title" value="${card.title || ''}" placeholder="Title" style="font-size:10px; padding:2px;">
+                        <input type="text" id="edit-${type}-${idx}-sub" value="${card.sub || ''}" placeholder="Subtitle" style="font-size:10px; padding:2px;">
+                        <button onclick="saveCardEdit('${type}', ${idx}, event)" style="font-size:10px; background:#A3B18A; border:none; cursor:pointer;">SAVE INLINE</button>
+                    </div>
+                `;
+
+                // Sub-functions for drag n drop
+                div.addEventListener('dragstart', dragStart);
+                div.addEventListener('dragover', dragOver);
+                div.addEventListener('drop', dragDrop);
+                div.addEventListener('dragenter', dragEnter);
+                div.addEventListener('dragleave', dragLeave);
+
+                grid.appendChild(div);
+            });
+        }
+
+        // --- DRAG AND DROP HANDLERS ---
+        function dragStart(e) {
+            dragStartIndex = +this.getAttribute('data-index');
+            dragTargetType = this.getAttribute('data-type');
+            this.classList.add('dragging');
+        }
+
+        function dragOver(e) {
+            e.preventDefault();
+        }
+
+        function dragEnter(e) {
+            e.preventDefault();
+            this.classList.add('over');
+        }
+
+        function dragLeave(e) {
+            this.classList.remove('over');
+        }
+
+        function dragDrop(e) {
+            this.classList.remove('over');
+            const dropTargetType = this.getAttribute('data-type');
+            
+            // Basic safety to ensure we don't drag between the two lists
+            if (dropTargetType === dragTargetType) {
+                const dragEndIndex = +this.getAttribute('data-index');
+                swapItems(dragTargetType, dragStartIndex, dragEndIndex);
+            }
+        }
+
+        function swapItems(type, fromIndex, toIndex) {
+            const dataArray = type === 'work' ? fullData.workCards : fullData.galleryCards;
+            
+            const itemOne = dataArray[fromIndex];
+            const itemTwo = dataArray[toIndex];
+
+            // Reorder the array
+            dataArray[fromIndex] = itemTwo;
+            dataArray[toIndex] = itemOne;
+            
+            // Re-render
+            renderGalleryPreviews(type);
+        }
+
+        async function resetGallery() {
+            if(confirm("Are you sure? This will wipe your custom gallery and load the original sample pieces.")) {
+                try {
+                    const defaultWorkCards = [
+                        { id: 'work-1', img: 'pictures/55d7f21507f728cde3a536a078927ffc.jpg', sub: '18K SOLID GOLD', title: 'CLASSIC' },
+                        { id: 'work-2', img: 'pictures/03ba7686febd92f3604332150f0d817e.jpg', sub: 'VVS DIAMOND SET', title: 'ICED OUT' },
+                        { id: 'work-3', img: 'pictures/127b4fc60be21cec470174d41b3d2baa.jpg', sub: 'CUSTOM DESIGN', title: 'OPAL INLAY' },
+                        { id: 'work-4', img: 'pictures/17ab522dcd94c9a0871bdf226045eaa0.jpg', sub: 'PLATINUM CUT', title: 'FANGS' }
+                    ];
+
+                    const defaultGalleryCards = [ ...defaultWorkCards,
+                        { id: 'gallery-5', img: 'pictures/441d751ec6656340d49b4e07ade92a0b.jpg', sub: 'FULL ARCH', title: 'ROSE GOLD' },
+                        { id: 'gallery-6', img: 'pictures/94a30832dee71af65360628cf4db6db6.jpg', sub: 'SINGLE CAP', title: 'STARBURST' }
+                    ];
+                    
+                    const existingReq = await fetch(`${API_URL}/data`);
+                    let entirePayload = await existingReq.json();
+                    
+                    entirePayload.workCards = [...defaultWorkCards];
+                    entirePayload.galleryCards = [...defaultGalleryCards];
+
+                    await fetch(`${API_URL}/data`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(entirePayload)
+                    });
+                    
+                    fullData.workCards = [...defaultWorkCards];
+                    fullData.galleryCards = [...defaultGalleryCards];
+                    
+                    renderGalleryPreviews('work');
+                    renderGalleryPreviews('gallery');
+                    alert("Gallery successfully reset. Check the live site!");
+                } catch (err) {
+                    alert("Error resetting gallery");
+                    console.log(err);
+                }
+            }
+        }
+
+        function addNewCard(type) {
+            const prefix = type === 'work' ? 'newWork' : 'newGallery';
+            const img = document.getElementById(prefix + 'Img').value;
+            const sub = document.getElementById(prefix + 'Sub').value;
+            const title = document.getElementById(prefix + 'Title').value;
+
+            if (!title) {
+                alert("Please at least provide a title.");
+                return;
+            }
+            
+            const targetArray = type === 'work' ? fullData.workCards : fullData.galleryCards;
+
+            targetArray.push({
+                id: type + '-' + Date.now(),
+                img,
+                sub,
+                title
+            });
+
+            // Clear form
+            document.getElementById(prefix + 'Img').value = '';
+            document.getElementById(prefix + 'Sub').value = '';
+            document.getElementById(prefix + 'Title').value = '';
+
+            renderGalleryPreviews(type);
+        }
+
+        function removeCard(type, idx, e) {
+            e.stopPropagation(); // Prevent drag events
+            if(confirm("Remove this card?")) {
+                const targetArray = type === 'work' ? fullData.workCards : fullData.galleryCards;
+                targetArray.splice(idx, 1);
+                renderGalleryPreviews(type);
+            }
+        }
+        
+        function toggleEditCard(type, idx, e) {
+            if(e) e.stopPropagation();
+            const gridId = type === 'work' ? 'workPreviewGrid' : 'galleryPreviewGrid';
+            const grid = document.getElementById(gridId);
+            const cardItem = grid.children[idx];
+            
+            const viewDiv = cardItem.querySelector('.card-view');
+            const editDiv = cardItem.querySelector('.card-edit');
+            
+            // Toggle visibility
+            if (editDiv.style.display === 'none') {
+                viewDiv.style.display = 'none';
+                editDiv.style.display = 'flex';
+                
+                // CRITICAL: Disable dragging on the parent so the text inputs can actually be clicked and selected
+                cardItem.setAttribute('draggable', 'false');
+                
+                // Allow inputs to process clicks without triggering drag
+                const inputs = editDiv.querySelectorAll('input');
+                inputs.forEach(inp => {
+                    inp.addEventListener('mousedown', (ev) => ev.stopPropagation());
+                    // Add enter key support to save
+                    inp.addEventListener('keypress', (ev) => {
+                        if (ev.key === 'Enter') saveCardEdit(type, idx, ev);
+                    });
+                });
+                
+                // Auto focus first input
+                setTimeout(() => inputs[0].focus(), 50);
+                
+            } else {
+                viewDiv.style.display = 'block';
+                editDiv.style.display = 'none';
+                cardItem.setAttribute('draggable', 'true');
+            }
+        }
+        
+        function saveCardEdit(type, idx, e) {
+            if(e) e.stopPropagation();
+            const targetArray = type === 'work' ? fullData.workCards : fullData.galleryCards;
+            
+            // Scrape values
+            const newImg = document.getElementById(`edit-${type}-${idx}-img`).value;
+            const newTitle = document.getElementById(`edit-${type}-${idx}-title`).value;
+            const newSub = document.getElementById(`edit-${type}-${idx}-sub`).value;
+            
+            // Apply updates
+            targetArray[idx].img = newImg;
+            targetArray[idx].title = newTitle;
+            targetArray[idx].sub = newSub;
+            
+            // Re-render grid to exit edit mode and show new values
+            renderGalleryPreviews(type);
+        }
+
+        async function saveGalleryChanges() {
+            try {
+                // Get all existing content, then push the workCards specifically over top 
+                const existingReq = await fetch(`${API_URL}/data`);
+                let entirePayload = await existingReq.json();
+
+                entirePayload.workCards = fullData.workCards;
+                entirePayload.galleryCards = fullData.galleryCards;
+
+                await fetch(`${API_URL}/data`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(entirePayload)
+                });
+                alert('Gallery updated successfully! Check the live site.');
+            } catch (err) {
+                alert('Error saving gallery.');
+                console.error(err);
+            }
+        }
+
+    </script>
+</body>
+
+</html>

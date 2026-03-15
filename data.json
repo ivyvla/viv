@@ -1,0 +1,110 @@
+{
+  "text-6": "SMILES",
+  "workCards": [
+    {
+      "id": "work-1",
+      "img": "http://localhost:3000/pictures/uploads/1773611086593-621326327.jpg",
+      "sub": "18K SOLID GOLD",
+      "title": "CLASSIC"
+    },
+    {
+      "id": "work-2",
+      "img": "http://localhost:3000/pictures/03ba7686febd92f3604332150f0d817e.jpg",
+      "sub": "VVS DIAMOND SET",
+      "title": "ICED OUT"
+    },
+    {
+      "id": "work-3",
+      "img": "http://localhost:3000/pictures/127b4fc60be21cec470174d41b3d2baa.jpg",
+      "sub": "CUSTOM DESIGN",
+      "title": "OPAL INLAY"
+    },
+    {
+      "id": "work-4",
+      "img": "http://localhost:3000/pictures/17ab522dcd94c9a0871bdf226045eaa0.jpg",
+      "sub": "PLATINUM CUT",
+      "title": "FANGS"
+    }
+  ],
+  "galleryCards": [
+    {
+      "id": "gallery-1",
+      "img": "pictures/55d7f21507f728cde3a536a078927ffc.jpg",
+      "sub": "18K SOLID GOLD",
+      "title": "CLASSIC"
+    },
+    {
+      "id": "gallery-2",
+      "img": "pictures/03ba7686febd92f3604332150f0d817e.jpg",
+      "sub": "VVS DIAMOND SET",
+      "title": "ICED OUT"
+    },
+    {
+      "id": "gallery-3",
+      "img": "pictures/127b4fc60be21cec470174d41b3d2baa.jpg",
+      "sub": "CUSTOM DESIGN",
+      "title": "OPAL INLAY"
+    },
+    {
+      "id": "gallery-4",
+      "img": "pictures/17ab522dcd94c9a0871bdf226045eaa0.jpg",
+      "sub": "PLATINUM CUT",
+      "title": "FANGS"
+    },
+    {
+      "id": "gallery-5",
+      "img": "pictures/441d751ec6656340d49b4e07ade92a0b.jpg",
+      "sub": "FULL ARCH",
+      "title": "ROSE GOLD"
+    },
+    {
+      "id": "gallery-6",
+      "img": "pictures/94a30832dee71af65360628cf4db6db6.jpg",
+      "sub": "SINGLE CAP",
+      "title": "STARBURST"
+    }
+  ],
+  "bg-1": "pictures/uploads/1773611086593-621326327.jpg",
+  "text-39": "📸",
+  "text-25": "METAL,",
+  "text-0": "HOME",
+  "text-1": "GALLERY",
+  "text-2": "ABOUT",
+  "text-3": "PROCESS",
+  "text-4": "CONTACT",
+  "text-5": "WE MAKE",
+  "text-7": "LOOK THAT",
+  "text-8": "DAMMMMMMMN",
+  "text-9": "GO",
+  "text-10": "OD",
+  "text-11": "HI,",
+  "text-12": "I'm Ivy.",
+  "text-13": "AT JUST",
+  "text-14": "21,",
+  "text-15": "I'VE BEEN",
+  "text-16": "shaping",
+  "text-17": "METAL,",
+  "text-18": "SWEATING",
+  "text-19": "DETAILS,",
+  "text-20": "SETTING",
+  "text-21": "DIAMONDS,",
+  "text-22": "AND",
+  "text-23": "crafting",
+  "text-24": "GRILLZ",
+  "text-26": "BIG ASS",
+  "text-27": "(AND TINY ASS)",
+  "text-28": "SMILES.",
+  "text-29": "ON THE",
+  "text-30": "GRAM",
+  "text-31": "📸",
+  "text-32": "HIT US",
+  "text-33": "UP",
+  "text-34": "VIV GRILLZ",
+  "text-35": "CUSTOM DENTAL JEWELRY — GERMANY",
+  "text-36": "IVY",
+  "text-37": "FOUNDER & JEWELER",
+  "text-38": "CUSTOM INQUIRIES",
+  "text-40": "IVY.VAL04@GMAIL.COM",
+  "text-41": "+49 24855329",
+  "bg-0": "http://localhost:3000/pictures/441d751ec6656340d49b4e07ade92a0b.jpg"
+}
